@@ -169,11 +169,11 @@ export function CheckoutForm({ user, plan }: CheckoutFormProps) {
         </div>
 
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push('/#pricing')}
           className="mt-5 w-full text-center text-sm transition-colors duration-200 hover:text-white"
           style={{ color: 'rgba(255,255,255,0.35)' }}
         >
-          ← Back
+          ← Back to pricing
         </button>
       </div>
     </div>
