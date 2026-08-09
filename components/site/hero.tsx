@@ -40,6 +40,12 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden" style={{ minHeight: '92vh' }}>
+      {/* Dot grid background */}
+      <div className="dot-grid" aria-hidden="true" style={{
+        position: 'absolute', inset: 0, opacity: 0.4, pointerEvents: 'none', zIndex: 0,
+        maskImage: 'radial-gradient(ellipse 70% 70% at 50% 30%, #000 20%, transparent 80%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at 50% 30%, #000 20%, transparent 80%)',
+      }} />
       {/* Glows */}
       <div aria-hidden="true" className="glow glow-white"
         style={{ left: '50%', top: '-2%', width: 900, height: 620, opacity: 0.38 }} />
@@ -56,27 +62,28 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 pt-20 pb-0 sm:px-6 sm:pt-28">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-3xl text-center dt-section-reveal">
 
           {/* Badge */}
           <span
             ref={badgeRef}
-            className="section-tag inline-flex"
-            style={{ willChange: 'transform' }}
+            className="section-tag inline-flex dt-stagger-item"
+            style={{ willChange: 'transform', '--stagger-delay': '0s' } as React.CSSProperties}
           >
             <span className="size-1.5 rounded-full bg-white/60" />
             Now optimizing Windows 10 &amp; 11
           </span>
 
-          {/* Headline — hone.gg 2-line style */}
+          {/* Headline */}
           <h1
-            className="mt-8 text-pretty"
+            className="mt-8 text-pretty dt-stagger-item"
             style={{
               fontSize: 'clamp(3rem, 7vw, 6rem)',
               fontWeight: 700,
               lineHeight: 1.0,
               letterSpacing: '-0.04em',
-            }}
+              '--stagger-delay': '0.08s',
+            } as React.CSSProperties}
           >
             <span
               className="block"
@@ -106,15 +113,22 @@ export function Hero() {
 
           {/* Sub */}
           <p
-            className="mx-auto mt-7 max-w-xl text-pretty text-base leading-relaxed sm:text-lg"
-            style={{ color: 'rgba(255,255,255,0.52)', fontWeight: 300 }}
+            className="mx-auto mt-7 max-w-xl text-pretty text-base leading-relaxed sm:text-lg dt-stagger-item"
+            style={{
+              color: 'rgba(255,255,255,0.52)',
+              fontWeight: 300,
+              '--stagger-delay': '0.16s',
+            } as React.CSSProperties}
           >
             Syntra scans, fixes, and fine-tunes your Windows machine in one click — debloating,
             tuning your network, and squeezing every last frame out of your games.
           </p>
 
-          {/* CTAs — bevel style */}
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          {/* CTAs */}
+          <div
+            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row dt-stagger-item"
+            style={{ '--stagger-delay': '0.24s' } as React.CSSProperties}
+          >
             <Link href="/checkout?plan=premium" className="btn-bevel">
               <Download className="size-4" />
               Get Started

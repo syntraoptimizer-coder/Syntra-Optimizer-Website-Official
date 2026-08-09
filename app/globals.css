@@ -475,3 +475,113 @@
   background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15) 35%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 65%, transparent);
   flex: none;
 }
+
+/* ── Animos.app inspired effects ────────────────────────────────── */
+
+/* Dot grid background */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Section reveal — starts invisible + 10px below */
+.dt-section-reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dt-section-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger item — blur + translateY, defocuses in */
+.dt-stagger-item {
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(22px);
+  transition:
+    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--stagger-delay, 0s);
+}
+.dt-section-reveal.is-visible .dt-stagger-item {
+  opacity: 1;
+  filter: blur(0px);
+  transform: translateY(0);
+}
+
+/* Stacked sticky feature cards */
+.stack-card {
+  position: sticky;
+  border-radius: 16px;
+  background: rgb(15, 15, 16);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: rgba(0,0,0,0.7) 0px -12px 50px -12px;
+  overflow: hidden;
+}
+
+/* Beam border on featured pricing card */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes beam-spin {
+  to { --beam-angle: 360deg; }
+}
+@keyframes beam-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.beam-border {
+  position: relative;
+  isolation: isolate;
+}
+.beam-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0%, transparent 52%,
+    rgba(255,255,255,0.08) 56%,
+    rgba(255,255,255,0.25) 60%,
+    rgba(255,255,255,0.55) 63%,
+    rgba(255,255,255,0.75) 66%,
+    rgba(255,255,255,0.55) 69%,
+    rgba(255,255,255,0.25) 72%,
+    rgba(255,255,255,0.08) 76%,
+    transparent 80%, transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: beam-spin 2.4s linear infinite, beam-fade-in 0.6s ease forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dt-section-reveal,
+  .dt-stagger-item {
+    opacity: 1;
+    filter: none;
+    transition: none;
+    transform: none;
+  }
+  .beam-border::after {
+    animation: none;
+  }
+}

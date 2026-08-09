@@ -103,7 +103,7 @@ export function Pricing() {
             return (
               <div
                 key={plan.name}
-                className={`relative flex flex-col rounded-2xl p-6 overflow-hidden ${plan.featured ? 'eco-card top-glow-border' : 'eco-card glass-card'}`}
+                className={`relative flex flex-col rounded-2xl p-6 overflow-hidden ${plan.featured ? 'eco-card beam-border' : 'eco-card glass-card'}`}
                 style={
                   plan.featured
                     ? { background: 'rgba(255,255,255,0.05)', boxShadow: '0 0 60px -20px rgba(255,255,255,0.18)' }
