@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { SectionHeading } from '@/components/site/section-heading'
-import { ParallaxImage } from '@/components/site/parallax-image'
 
 const SLIDES = [
   {
@@ -14,354 +13,298 @@ const SLIDES = [
     tag: '01',
   },
   {
-    image: '/images/app-login.png',
-    label: 'Quick Access',
-    title: 'Sign in and start optimizing',
-    description: 'Get started in seconds with Google or Discord. Your optimization history and settings are saved to your account.',
+    image: '/images/app-updates.png',
+    label: 'Performance',
+    title: 'New optimizations every release',
+    description: 'Each release brings new performance tweaks, stability fixes, and advanced tools. Stay ahead automatically.',
     tag: '02',
   },
   {
-    image: '/images/app-updates.png',
-    label: 'Always Updated',
-    title: 'New optimizations every release',
-    description: 'Each release brings new performance tweaks, stability fixes, and advanced tools. Stay ahead automatically.',
+    image: '/images/app-login.png',
+    label: 'Quick Access',
+    title: 'Sign in and start optimizing',
+    description: 'Get started in seconds with Google or Discord. Your settings are saved to your account.',
     tag: '03',
   },
 ]
 
 export function AppShowcase() {
-  const [current, setCurrent] = useState(0)
-  const [prev, setPrev] = useState<number | null>(null)
-  const [direction, setDirection] = useState<'next' | 'prev'>('next')
-  const [animating, setAnimating] = useState(false)
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
-
-  const goTo = useCallback((index: number, dir: 'next' | 'prev' = 'next') => {
-    if (animating || index === current) return
-    setDirection(dir)
-    setPrev(current)
-    setAnimating(true)
-    setTimeout(() => {
-      setCurrent(index)
-      setPrev(null)
-      setAnimating(false)
-    }, 500)
-  }, [animating, current])
-
-  const next = useCallback(() => goTo((current + 1) % SLIDES.length, 'next'), [current, goTo])
-  const prevSlide = useCallback(() => goTo((current - 1 + SLIDES.length) % SLIDES.length, 'prev'), [current, goTo])
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const stickyRef = useRef<HTMLDivElement>(null)
+  const [progress, setProgress] = useState(0) // 0 to 1 across all slides
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [slideProgress, setSlideProgress] = useState(0) // 0 to 1 within current slide
 
   useEffect(() => {
-    timerRef.current = setInterval(next, 5000)
-    return () => { if (timerRef.current) clearInterval(timerRef.current) }
-  }, [next])
+    const onScroll = () => {
+      const section = sectionRef.current
+      if (!section) return
 
-  const slide = SLIDES[current]
+      const rect = section.getBoundingClientRect()
+      const sectionH = section.offsetHeight
+      const viewH = window.innerHeight
+
+      // How far we've scrolled through the sticky section
+      const scrolled = -rect.top
+      const total = sectionH - viewH
+      const p = Math.max(0, Math.min(1, scrolled / total))
+
+      setProgress(p)
+
+      // Which slide we're on
+      const slideCount = SLIDES.length
+      const idx = Math.min(Math.floor(p * slideCount), slideCount - 1)
+      const sp = (p * slideCount) - idx
+
+      setActiveIndex(idx)
+      setSlideProgress(sp)
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const slide = SLIDES[activeIndex]
 
   return (
-    <section className="relative overflow-hidden" style={{
-      borderTop: '1px solid rgba(255,255,255,0.07)',
-      borderBottom: '1px solid rgba(255,255,255,0.07)',
-      background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,255,255,0.03) 0%, transparent 70%)',
-    }}>
-      {/* Background grid */}
-      <div className="eco-tiles" aria-hidden="true" />
+    <div
+      ref={sectionRef}
+      // Height = viewport × (slides + 1) so each slide gets a full viewport of scroll
+      style={{ height: `${(SLIDES.length + 1) * 100}vh` }}
+    >
+      {/* Sticky container */}
+      <div
+        ref={stickyRef}
+        className="sticky top-0 overflow-hidden"
+        style={{
+          height: '100vh',
+          borderTop: '1px solid rgba(255,255,255,0.07)',
+          borderBottom: '1px solid rgba(255,255,255,0.07)',
+          background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,255,255,0.02) 0%, transparent 70%)',
+        }}
+      >
+        {/* Background glow */}
+        <div aria-hidden="true" className="glow glow-soft" style={{
+          left: '50%', top: '50%', width: 900, height: 700, opacity: 0.1,
+          position: 'absolute', transform: 'translate(-50%, -50%)',
+        }} />
+        <div className="eco-tiles" aria-hidden="true" />
 
-      {/* Ambient glow */}
-      <div aria-hidden="true" className="glow glow-soft" style={{
-        left: '50%', top: '60%', width: 800, height: 600, opacity: 0.12,
-      }} />
-
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-24 sm:px-6">
-        <SectionHeading
-          eyebrow="See it in action"
-          title="Built for performance,"
-          accent="designed for you."
-          description="A powerful Windows optimizer with a clean interface. Everything you need in one app."
-        />
-
-        <div className="mt-16 relative">
-          {/* ── 3D Floating screen mockup with parallax ── */}
-          <ParallaxImage speed={0.15} className="relative mx-auto" style={{ maxWidth: 900 }}>
-            <div
-              style={{
-                perspective: '1200px',
-              }}
-            >
-            {/* Outer frame — monitor bezel */}
-            <div
-              style={{
-                position: 'relative',
-                borderRadius: '16px',
-                padding: '10px 10px 40px',
-                background: 'linear-gradient(160deg, rgba(40,40,40,0.9) 0%, rgba(15,15,15,0.95) 100%)',
-                border: '1px solid rgba(255,255,255,0.12)',
-                boxShadow: `
-                  0 0 0 1px rgba(255,255,255,0.06),
-                  0 40px 80px -20px rgba(0,0,0,0.9),
-                  0 0 120px -40px rgba(255,255,255,0.08)
-                `,
-                transform: 'rotateX(2deg)',
-                transformOrigin: 'bottom center',
-              }}
-            >
-              {/* Top bar — window chrome */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                paddingBottom: 8,
-                paddingLeft: 4,
-              }}>
-                {['#ff5f57', '#febc2e', '#28c840'].map((c, i) => (
-                  <div key={i} style={{ width: 10, height: 10, borderRadius: '50%', background: c, opacity: 0.8 }} />
-                ))}
-                <div style={{
-                  flex: 1,
-                  height: 20,
-                  background: 'rgba(255,255,255,0.04)',
-                  borderRadius: 4,
-                  marginLeft: 8,
-                }} />
-              </div>
-
-              {/* Screen area */}
-              <div
-                style={{
-                  position: 'relative',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  background: '#080808',
-                  aspectRatio: '16/10',
-                }}
-              >
-                {/* Current slide */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    opacity: animating ? 0 : 1,
-                    transform: animating
-                      ? `translateX(${direction === 'next' ? '-20px' : '20px'})`
-                      : 'translateX(0)',
-                    transition: 'opacity 0.5s ease, transform 0.5s ease',
-                  }}
-                >
-                  <Image
-                    src={slide.image}
-                    alt={slide.label}
-                    fill
-                    className="object-cover object-top"
-                    priority
-                  />
-                </div>
-
-                {/* Screen glare overlay */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    pointerEvents: 'none',
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%)',
-                    zIndex: 2,
-                  }}
-                />
-
-                {/* Bottom fade */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    bottom: 0, left: 0, right: 0,
-                    height: '30%',
-                    background: 'linear-gradient(to top, rgba(8,8,8,0.7), transparent)',
-                    zIndex: 3,
-                    pointerEvents: 'none',
-                  }}
-                />
-
-                {/* Slide counter badge */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: 14,
-                    right: 14,
-                    zIndex: 4,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    padding: '4px 10px',
-                    background: 'rgba(8,8,8,0.8)',
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    borderRadius: 4,
-                    backdropFilter: 'blur(8px)',
-                  }}
-                >
-                  <span style={{
-                    fontFamily: 'ui-monospace, monospace',
-                    fontSize: '0.65rem',
-                    color: 'rgba(255,255,255,0.5)',
-                    letterSpacing: '0.08em',
-                  }}>
-                    {slide.tag} / 0{SLIDES.length}
-                  </span>
-                </div>
-              </div>
-
-              {/* Monitor stand */}
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: 120,
-                height: 28,
-                background: 'linear-gradient(to bottom, rgba(35,35,35,0.9), rgba(20,20,20,0.9))',
-                borderRadius: '0 0 8px 8px',
-                borderTop: '1px solid rgba(255,255,255,0.08)',
-              }} />
-            </div>
-
-            {/* Screen glow reflection on floor */}
-            <div
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                bottom: -40,
-                left: '10%',
-                right: '10%',
-                height: 60,
-                background: 'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 70%)',
-                filter: 'blur(20px)',
-                pointerEvents: 'none',
-              }}
+        <div className="relative z-10 h-full flex flex-col justify-center mx-auto max-w-6xl px-4 sm:px-6">
+          {/* Heading */}
+          <div className="text-center mb-10">
+            <SectionHeading
+              eyebrow="See it in action"
+              title="Built for performance,"
+              accent="designed for you."
             />
           </div>
-          </ParallaxImage>
 
-          {/* ── Controls & info below mockup ── */}
-          <div className="mt-10 flex flex-col items-center gap-6">
-            {/* Slide title + description */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left — stacked images with parallax */}
             <div
-              className="text-center max-w-lg"
-              style={{
-                opacity: animating ? 0 : 1,
-                transform: animating ? 'translateY(6px)' : 'translateY(0)',
-                transition: 'opacity 0.4s ease, transform 0.4s ease',
-              }}
+              className="relative select-none"
+              style={{ aspectRatio: '16/10' }}
             >
-              <h3 style={{
-                fontSize: '1.2rem',
-                fontWeight: 500,
-                letterSpacing: '-0.02em',
-                color: 'rgba(255,255,255,0.9)',
-                marginBottom: 6,
-              }}>
-                {slide.title}
-              </h3>
-              <p style={{
-                fontSize: '0.88rem',
-                color: 'rgba(255,255,255,0.42)',
-                fontWeight: 300,
-                lineHeight: 1.6,
-              }}>
-                {slide.description}
-              </p>
+              {SLIDES.map((s, i) => {
+                // Each image: visible when activeIndex === i
+                // Parallax: translate based on scroll within this slide
+                const isActive = i === activeIndex
+                const isPast = i < activeIndex
+
+                // Parallax Y — active image moves up as you scroll
+                const parallaxY = isActive
+                  ? -(slideProgress * 40)
+                  : isPast
+                  ? -40
+                  : 40
+
+                const opacity = isActive
+                  ? 1
+                  : isPast
+                  ? Math.max(0, 1 - (activeIndex - i) * 0.6)
+                  : 0
+
+                const scale = isActive ? 1 : isPast ? 0.97 : 1.02
+
+                return (
+                  <div
+                    key={s.image}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      opacity,
+                      transform: `translateY(${parallaxY}px) scale(${scale})`,
+                      transition: isActive
+                        ? 'opacity 0.6s ease, transform 0.6s ease'
+                        : 'opacity 0.4s ease, transform 0.4s ease',
+                      zIndex: SLIDES.length - i,
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      boxShadow: isActive
+                        ? '0 32px 80px -20px rgba(0,0,0,0.8), 0 0 60px -30px rgba(255,255,255,0.08)'
+                        : '0 16px 40px -10px rgba(0,0,0,0.6)',
+                    }}
+                  >
+                    <Image
+                      src={s.image}
+                      alt={s.label}
+                      fill
+                      className="object-cover object-top"
+                      priority={i === 0}
+                    />
+                    {/* Screen glare */}
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        position: 'absolute', inset: 0,
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%)',
+                        pointerEvents: 'none',
+                        zIndex: 2,
+                      }}
+                    />
+                    {/* Bottom fade */}
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        position: 'absolute', bottom: 0, left: 0, right: 0,
+                        height: '25%',
+                        background: 'linear-gradient(to top, rgba(8,8,8,0.6), transparent)',
+                        pointerEvents: 'none', zIndex: 3,
+                      }}
+                    />
+                    {/* Tag */}
+                    <div
+                      style={{
+                        position: 'absolute', bottom: 12, left: 12, zIndex: 4,
+                        padding: '3px 8px',
+                        background: 'rgba(8,8,8,0.75)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        borderRadius: 0,
+                        fontFamily: 'ui-monospace, monospace',
+                        fontSize: '0.65rem',
+                        letterSpacing: '0.1em',
+                        color: 'rgba(255,255,255,0.5)',
+                        backdropFilter: 'blur(8px)',
+                      }}
+                    >
+                      {s.tag} / 0{SLIDES.length}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
 
-            {/* Navigation dots + arrows */}
-            <div className="flex items-center gap-5">
-              {/* Prev */}
-              <button
-                onClick={prevSlide}
-                className="grid size-9 place-items-center transition-all duration-200 hover:scale-110"
-                style={{
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: 4,
-                  color: 'rgba(255,255,255,0.5)',
-                  cursor: 'pointer',
-                }}
-                aria-label="Previous"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </button>
-
-              {/* Dots */}
-              <div className="flex items-center gap-2">
+            {/* Right — text that changes per slide */}
+            <div
+              style={{
+                opacity: 1,
+                transition: 'opacity 0.4s ease',
+              }}
+            >
+              {/* Step indicators */}
+              <div className="flex flex-col gap-3 mb-8">
                 {SLIDES.map((s, i) => (
-                  <button
-                    key={i}
-                    onClick={() => goTo(i, i > current ? 'next' : 'prev')}
-                    className="transition-all duration-300"
-                    style={{
-                      width: i === current ? 28 : 8,
-                      height: 8,
-                      borderRadius: 0,
-                      background: i === current
-                        ? 'rgba(255,255,255,0.85)'
-                        : 'rgba(255,255,255,0.18)',
-                      cursor: 'pointer',
-                      border: 'none',
-                    }}
-                    aria-label={`Slide ${i + 1}: ${s.label}`}
-                  />
+                  <div
+                    key={s.label}
+                    className="flex items-center gap-3"
+                    style={{ opacity: i === activeIndex ? 1 : 0.35, transition: 'opacity 0.4s ease' }}
+                  >
+                    <div
+                      style={{
+                        width: i === activeIndex ? 32 : 8,
+                        height: 2,
+                        background: i === activeIndex
+                          ? 'rgba(255,255,255,0.85)'
+                          : 'rgba(255,255,255,0.2)',
+                        borderRadius: 0,
+                        transition: 'width 0.4s ease, background 0.4s ease',
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span style={{
+                      fontFamily: 'ui-monospace, monospace',
+                      fontSize: '0.68rem',
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      color: i === activeIndex
+                        ? 'rgba(255,255,255,0.7)'
+                        : 'rgba(255,255,255,0.25)',
+                      transition: 'color 0.4s ease',
+                    }}>
+                      {s.label}
+                    </span>
+                  </div>
                 ))}
               </div>
 
-              {/* Next */}
-              <button
-                onClick={next}
-                className="grid size-9 place-items-center transition-all duration-200 hover:scale-110"
-                style={{
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: 4,
-                  color: 'rgba(255,255,255,0.5)',
-                  cursor: 'pointer',
-                }}
-                aria-label="Next"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </button>
-            </div>
+              {/* Active slide content */}
+              <div key={activeIndex} style={{ animation: 'fadeUp 0.5s ease' }}>
+                <h3 style={{
+                  fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
+                  fontWeight: 400,
+                  letterSpacing: '-0.028em',
+                  lineHeight: 1.15,
+                  color: 'transparent',
+                  backgroundImage: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  marginBottom: 12,
+                }}>
+                  {slide.title}
+                </h3>
+                <p style={{
+                  fontSize: '0.95rem',
+                  color: 'rgba(255,255,255,0.44)',
+                  fontWeight: 300,
+                  lineHeight: 1.7,
+                  maxWidth: '38ch',
+                }}>
+                  {slide.description}
+                </p>
+              </div>
 
-            {/* Slide labels */}
-            <div className="flex items-center gap-6">
-              {SLIDES.map((s, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i, i > current ? 'next' : 'prev')}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontFamily: 'ui-monospace, monospace',
-                    fontSize: '0.68rem',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: i === current
-                      ? 'rgba(255,255,255,0.8)'
-                      : 'rgba(255,255,255,0.28)',
-                    transition: 'color 0.2s ease',
-                    padding: '4px 0',
-                    borderBottom: i === current
-                      ? '1px solid rgba(255,255,255,0.5)'
-                      : '1px solid transparent',
-                  }}
-                >
-                  {s.label}
-                </button>
-              ))}
+              {/* Progress bar */}
+              <div
+                className="mt-8"
+                style={{
+                  height: 2,
+                  background: 'rgba(255,255,255,0.08)',
+                  borderRadius: 0,
+                  overflow: 'hidden',
+                  maxWidth: 240,
+                }}
+              >
+                <div style={{
+                  height: '100%',
+                  background: 'rgba(255,255,255,0.7)',
+                  width: `${progress * 100}%`,
+                  transition: 'width 0.1s linear',
+                }} />
+              </div>
+              <p style={{
+                marginTop: 8,
+                fontFamily: 'ui-monospace, monospace',
+                fontSize: '0.65rem',
+                letterSpacing: '0.1em',
+                color: 'rgba(255,255,255,0.25)',
+                textTransform: 'uppercase',
+              }}>
+                Scroll to explore
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </section>
+
+      <style>{`
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </div>
   )
 }
