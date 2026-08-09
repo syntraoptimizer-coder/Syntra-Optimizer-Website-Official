@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import { SectionHeading } from '@/components/site/section-heading'
+import { ParallaxImage } from '@/components/site/parallax-image'
 
 const SLIDES = [
   {
@@ -80,14 +81,13 @@ export function AppShowcase() {
         />
 
         <div className="mt-16 relative">
-          {/* ── 3D Floating screen mockup ── */}
-          <div
-            className="relative mx-auto"
-            style={{
-              maxWidth: 900,
-              perspective: '1200px',
-            }}
-          >
+          {/* ── 3D Floating screen mockup with parallax ── */}
+          <ParallaxImage speed={0.15} className="relative mx-auto" style={{ maxWidth: 900 }}>
+            <div
+              style={{
+                perspective: '1200px',
+              }}
+            >
             {/* Outer frame — monitor bezel */}
             <div
               style={{
@@ -238,6 +238,7 @@ export function AppShowcase() {
               }}
             />
           </div>
+          </ParallaxImage>
 
           {/* ── Controls & info below mockup ── */}
           <div className="mt-10 flex flex-col items-center gap-6">
