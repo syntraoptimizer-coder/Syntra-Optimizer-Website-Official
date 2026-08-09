@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { LenisProvider } from '@/components/site/lenis-provider'
-import { RevealObserver } from '@/components/site/reveal-observer'
 import { NoContextMenu } from '@/components/site/no-context-menu'
 
 const geistSans = Geist({
@@ -109,7 +108,6 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased">
         <NoContextMenu />
-        <RevealObserver />
         <LenisProvider />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

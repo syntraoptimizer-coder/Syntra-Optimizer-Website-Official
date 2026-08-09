@@ -113,22 +113,15 @@ export function Hero() {
 
           {/* Sub */}
           <p
-            className="mx-auto mt-7 max-w-xl text-pretty text-base leading-relaxed sm:text-lg dt-stagger-item"
-            style={{
-              color: 'rgba(255,255,255,0.52)',
-              fontWeight: 300,
-              '--stagger-delay': '0.16s',
-            } as React.CSSProperties}
+            className="mx-auto mt-7 max-w-xl text-pretty text-base leading-relaxed sm:text-lg"
+            style={{ color: 'rgba(255,255,255,0.52)', fontWeight: 300 }}
           >
             Syntra scans, fixes, and fine-tunes your Windows machine in one click — debloating,
             tuning your network, and squeezing every last frame out of your games.
           </p>
 
           {/* CTAs */}
-          <div
-            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row dt-stagger-item"
-            style={{ '--stagger-delay': '0.24s' } as React.CSSProperties}
-          >
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/checkout?plan=premium" className="btn-bevel">
               <Download className="size-4" />
               Get Started
