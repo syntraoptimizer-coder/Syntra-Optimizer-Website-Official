@@ -91,7 +91,8 @@ export function Pricing() {
       <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <SectionHeading
           eyebrow="Simple pricing"
-          title="Do it yourself, or let us do it"
+          title="Do it yourself, or"
+          accent="let us do it."
           description="Pick a one-time license and optimize on your own, or have a Syntra expert handle everything remotely."
         />
 

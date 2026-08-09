@@ -379,3 +379,99 @@
   transform: translateY(-4px);
   box-shadow: 0 16px 48px -16px rgba(0,0,0,0.6);
 }
+
+/* ── Hone.gg inspired additions ─────────────────────────────────── */
+
+/* Sharp section tag — monospace, uppercase, no border-radius */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.084em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+/* Bevel button — inset highlight top + shadow bottom */
+.btn-bevel {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  background: rgba(255,255,255,0.92);
+  color: #080808;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,0.8),
+    inset 0 -2px 0 rgba(0,0,0,0.2),
+    0 0 32px -8px rgba(255,255,255,0.45);
+  transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
+}
+.btn-bevel:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+.btn-bevel:active {
+  transform: scale(0.98);
+}
+
+/* Ghost bevel button */
+.btn-bevel-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease;
+}
+.btn-bevel-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.28);
+  transform: translateY(-1px);
+}
+
+/* Marquee animation for testimonials */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Stat vertical separator */
+.stat-separator {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15) 35%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 65%, transparent);
+  flex: none;
+}

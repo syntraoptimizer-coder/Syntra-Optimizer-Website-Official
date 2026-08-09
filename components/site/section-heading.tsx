@@ -2,44 +2,51 @@ export function SectionHeading({
   eyebrow,
   title,
   description,
+  accent, // last word of title shown brighter
 }: {
   eyebrow?: string
   title: string
   description?: string
+  accent?: string
 }) {
   return (
     <div className="mx-auto max-w-2xl text-center">
       {eyebrow && (
-        <span
-          className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium uppercase tracking-widest"
-          style={{
-            background: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            color: 'rgba(255,255,255,0.5)',
-          }}
-        >
+        <span className="section-tag">
           <span
-            className="size-1 rounded-full bg-white/70"
+            className="size-1.5 rounded-full bg-white/60"
             aria-hidden="true"
           />
           {eyebrow}
         </span>
       )}
       <h2
-        className="mt-5 text-balance tracking-tight"
+        className="mt-5 text-balance"
         style={{
           fontSize: 'clamp(1.9rem, 3.8vw, 3.2rem)',
           fontWeight: 300,
-          letterSpacing: '-0.024em',
-          lineHeight: 1.1,
-          color: 'transparent',
-          backgroundImage:
-            'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%)',
-          WebkitBackgroundClip: 'text',
-          backgroundClip: 'text',
+          letterSpacing: '-0.028em',
+          lineHeight: 1.08,
+          color: 'rgba(255,255,255,0.75)',
         }}
       >
-        {title}
+        {accent ? (
+          <>
+            {title}{' '}
+            <span style={{ color: '#ffffff', fontWeight: 400 }}>{accent}</span>
+          </>
+        ) : (
+          <span
+            style={{
+              color: 'transparent',
+              backgroundImage: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+            }}
+          >
+            {title}
+          </span>
+        )}
       </h2>
       {description && (
         <p

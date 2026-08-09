@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { Download, ShieldCheck } from 'lucide-react'
-import { buttonVariants } from '@/components/ui/button'
 import { useEffect, useRef } from 'react'
 
 function Speck({ style }: { style: React.CSSProperties }) {
@@ -41,71 +40,68 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden" style={{ minHeight: '92vh' }}>
-      {/* ── Background glows ── */}
-      <div
-        aria-hidden="true"
-        className="glow glow-white"
-        style={{ left: '50%', top: '-2%', width: 900, height: 620, opacity: 0.38 }}
-      />
-      <div
-        aria-hidden="true"
-        className="glow glow-soft"
-        style={{ left: '18%', top: '35%', width: 480, height: 680, opacity: 0.28 }}
-      />
-      <div
-        aria-hidden="true"
-        className="glow glow-soft"
-        style={{ left: '82%', top: '28%', width: 380, height: 520, opacity: 0.22 }}
-      />
+      {/* Glows */}
+      <div aria-hidden="true" className="glow glow-white"
+        style={{ left: '50%', top: '-2%', width: 900, height: 620, opacity: 0.38 }} />
+      <div aria-hidden="true" className="glow glow-soft"
+        style={{ left: '18%', top: '35%', width: 480, height: 680, opacity: 0.28 }} />
+      <div aria-hidden="true" className="glow glow-soft"
+        style={{ left: '82%', top: '28%', width: 380, height: 520, opacity: 0.22 }} />
 
-      {/* ── Hero grid ── */}
+      {/* Hero grid */}
       <div className="hero-grid" aria-hidden="true" />
 
-      {/* ── Speck particles ── */}
-      {SPECKS.map((s, i) => (
-        <Speck key={i} style={s} />
-      ))}
+      {/* Specks */}
+      {SPECKS.map((s, i) => <Speck key={i} style={s} />)}
 
-      {/* ── Content ── */}
+      {/* Content */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 pt-20 pb-0 sm:px-6 sm:pt-28">
         <div className="mx-auto max-w-3xl text-center">
 
           {/* Badge */}
           <span
             ref={badgeRef}
-            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium"
-            style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.14)',
-              color: 'rgba(255,255,255,0.7)',
-              backdropFilter: 'blur(10px)',
-              willChange: 'transform',
-            }}
+            className="section-tag inline-flex"
+            style={{ willChange: 'transform' }}
           >
-            <span
-              className="size-1.5 rounded-full bg-white"
-              style={{ boxShadow: '0 0 6px 2px rgba(255,255,255,0.7)' }}
-            />
+            <span className="size-1.5 rounded-full bg-white/60" />
             Now optimizing Windows 10 &amp; 11
           </span>
 
-          {/* Headline */}
+          {/* Headline — hone.gg 2-line style */}
           <h1
-            className="mt-8 text-pretty tracking-tight"
+            className="mt-8 text-pretty"
             style={{
-              fontSize: 'clamp(2.8rem, 6.5vw, 5.6rem)',
-              fontWeight: 300,
-              lineHeight: 1.04,
-              letterSpacing: '-0.028em',
-              color: 'transparent',
-              backgroundImage:
-                'radial-gradient(110% 130% at 50% 80%, #ffffff 0%, rgba(255,255,255,0.88) 28%, rgba(200,200,200,0.74) 68%, rgba(140,140,140,0.55) 100%)',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
+              fontSize: 'clamp(3rem, 7vw, 6rem)',
+              fontWeight: 700,
+              lineHeight: 1.0,
+              letterSpacing: '-0.04em',
             }}
           >
-            Optimize your PC.<br />
-            <span style={{ opacity: 0.92 }}>Instantly.</span>
+            <span
+              className="block"
+              style={{
+                marginBottom: '-0.05em',
+                color: 'transparent',
+                backgroundImage: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.75) 100%)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+              }}
+            >
+              Optimize your PC.
+            </span>
+            <span
+              className="block"
+              style={{
+                color: 'transparent',
+                backgroundImage: 'radial-gradient(ellipse at 50% 100%, #ffffff 0%, rgba(255,255,255,0.6) 70%)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                textShadow: '0 0 80px rgba(255,255,255,0.3)',
+              }}
+            >
+              Instantly.
+            </span>
           </h1>
 
           {/* Sub */}
@@ -117,29 +113,13 @@ export function Hero() {
             tuning your network, and squeezing every last frame out of your games.
           </p>
 
-          {/* CTAs */}
+          {/* CTAs — bevel style */}
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/checkout?plan=premium"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
-              style={{
-                background: 'rgba(255,255,255,0.92)',
-                color: '#080808',
-                boxShadow: '0 0 32px -6px rgba(255,255,255,0.55)',
-              }}
-            >
+            <Link href="/checkout?plan=premium" className="btn-bevel">
               <Download className="size-4" />
               Get Started
             </Link>
-            <a
-              href="#pricing"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5"
-              style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.14)',
-                color: 'rgba(255,255,255,0.78)',
-              }}
-            >
+            <a href="#pricing" className="btn-bevel-ghost">
               View Pricing
             </a>
           </div>
@@ -155,27 +135,11 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ── Planet dome at bottom of hero ── */}
-      <div
-        aria-hidden="true"
-        className="planet"
-        style={{
-          top: 'calc(92vh - 8vw)',
-          width: '260vw',
-          height: '260vw',
-          zIndex: 2,
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="planet-rim"
-        style={{
-          top: 'calc(92vh - 8vw)',
-          width: '260vw',
-          height: '260vw',
-          zIndex: 3,
-        }}
-      />
+      {/* Planet dome */}
+      <div aria-hidden="true" className="planet"
+        style={{ top: 'calc(92vh - 8vw)', width: '260vw', height: '260vw', zIndex: 2 }} />
+      <div aria-hidden="true" className="planet-rim"
+        style={{ top: 'calc(92vh - 8vw)', width: '260vw', height: '260vw', zIndex: 3 }} />
     </section>
   )
 }

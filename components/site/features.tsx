@@ -61,7 +61,8 @@ export function Features() {
       <div className="relative z-10 mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <SectionHeading
           eyebrow="Professional Performance Suite"
-          title="Unlock Your PC's Full Potential"
+          title="Unlock Your PC's Full"
+          accent="Potential."
           description="Powerful optimization tools designed to maximize Windows performance, increase gaming FPS, reduce latency, and keep your PC running like new."
         />
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -148,12 +148,8 @@ export function Navbar() {
                 </Link>
                 <Link
                   href="/checkout?plan=premium"
-                  className="inline-flex h-9 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-all duration-200 hover:-translate-y-px"
-                  style={{
-                    background: 'rgba(255,255,255,0.92)',
-                    color: '#080808',
-                    boxShadow: '0 0 24px -6px rgba(255,255,255,0.5)',
-                  }}
+                  className="btn-bevel inline-flex h-9 items-center gap-2 rounded-full px-5 text-sm"
+                  style={{ boxShadow: '0 0 24px -6px rgba(255,255,255,0.5)' }}
                 >
                   Get Started
                 </Link>
