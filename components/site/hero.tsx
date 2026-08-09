@@ -62,13 +62,13 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 pt-20 pb-0 sm:px-6 sm:pt-28">
-        <div className="mx-auto max-w-3xl text-center dt-section-reveal">
+        <div className="mx-auto max-w-3xl text-center">
 
           {/* Badge */}
           <span
             ref={badgeRef}
-            className="section-tag inline-flex dt-stagger-item"
-            style={{ willChange: 'transform', '--stagger-delay': '0s' } as React.CSSProperties}
+            className="section-tag inline-flex"
+            style={{ willChange: 'transform' }}
           >
             <span className="size-1.5 rounded-full bg-white/60" />
             Now optimizing Windows 10 &amp; 11
@@ -76,14 +76,13 @@ export function Hero() {
 
           {/* Headline */}
           <h1
-            className="mt-8 text-pretty dt-stagger-item"
+            className="mt-8 text-pretty"
             style={{
               fontSize: 'clamp(3rem, 7vw, 6rem)',
               fontWeight: 700,
               lineHeight: 1.0,
               letterSpacing: '-0.04em',
-              '--stagger-delay': '0.08s',
-            } as React.CSSProperties}
+            }}
           >
             <span
               className="block"
