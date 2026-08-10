@@ -5,6 +5,7 @@ import { Features } from '@/components/site/features'
 import { AppShowcase } from '@/components/site/app-showcase'
 import { Benchmarks } from '@/components/site/benchmarks'
 import { Testimonials } from '@/components/site/testimonials'
+import { SupportedGames } from '@/components/site/supported-games'
 import { Pricing } from '@/components/site/pricing'
 import { Faq } from '@/components/site/faq'
 import { Cta } from '@/components/site/cta'
@@ -55,6 +56,7 @@ export default function HomePage() {
         <Features />
         <AppShowcase />
         <Benchmarks />
+        <SupportedGames />
         <Testimonials />
         <Pricing />
         <Faq />
