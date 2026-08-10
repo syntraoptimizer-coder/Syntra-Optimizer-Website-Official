@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Download, PackageCheck, User, Crown, Wrench, Settings, LayoutDashboard } from 'lucide-react'
+import { Download, PackageCheck, User, Crown, Wrench, Settings, LayoutDashboard, CheckCircle2, Clock } from 'lucide-react'
 import { TabBar } from '@/components/ui/tab-bar'
 import { UpdateTimeline, type UpdateItem } from '@/components/dashboard/update-timeline'
 import { AccountSettings } from '@/components/dashboard/account-settings'
@@ -28,151 +28,168 @@ interface Props {
   updates: UpdateItem[]
 }
 
+/* ── Reusable section card ── */
+function SCard({ title, icon: Icon, children, style }: { title: string; icon: React.ElementType; children: React.ReactNode; style?: React.CSSProperties }) {
+  return (
+    <div className="s-card" style={{ padding: 24, ...style }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid var(--line)' }}>
+        <div style={{
+          width: 28, height: 28, borderRadius: 4,
+          background: 'rgba(255,255,255,0.06)', border: '1px solid var(--line)',
+          display: 'grid', placeItems: 'center', color: 'var(--ink-2)', flexShrink: 0,
+        }}>
+          <Icon style={{ width: 13, height: 13 }} />
+        </div>
+        <h2 style={{ fontSize: '0.83rem', fontWeight: 600, color: 'var(--ink-1)', letterSpacing: '-0.01em', margin: 0 }}>{title}</h2>
+      </div>
+      {children}
+    </div>
+  )
+}
+
 export function DashboardTabs({ user, name, email, role, serviceCount, initials, updates }: Props) {
   const [tab, setTab] = useState<'overview' | 'downloads' | 'settings'>('overview')
-
   const hasPremium = role === 'premium' || serviceCount > 0
 
   const Badges = () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-      {role === 'premium' && (
-        <span className="s-tag" style={{ gap: 5 }}>
-          <Crown style={{ width: 10, height: 10 }} />Premium
-        </span>
-      )}
-      {serviceCount > 0 && (
-        <span className="s-tag" style={{ gap: 5, color: '#8ab4ff' }}>
-          <Wrench style={{ width: 10, height: 10 }} />
-          {serviceCount > 1 ? `Service x${serviceCount}` : 'Service'}
-        </span>
-      )}
-      {role === 'free' && serviceCount === 0 && (
-        <span className="s-tag" style={{ color: 'var(--ink-3)' }}>Free</span>
-      )}
+      {role === 'premium' && <span className="s-tag" style={{ gap: 5 }}><Crown style={{ width: 10, height: 10 }} />Premium</span>}
+      {serviceCount > 0 && <span className="s-tag" style={{ gap: 5, color: '#8ab4ff' }}><Wrench style={{ width: 10, height: 10 }} />{serviceCount > 1 ? `Service x${serviceCount}` : 'Service'}</span>}
+      {role === 'free' && serviceCount === 0 && <span className="s-tag" style={{ color: 'var(--ink-3)' }}>Free</span>}
     </div>
   )
 
   return (
     <div>
-      <TabBar
-        tabs={TABS}
-        activeTab={tab}
-        onChange={(id) => setTab(id as typeof tab)}
-        style={{ marginBottom: 32 }}
-      />
+      <TabBar tabs={TABS} activeTab={tab} onChange={id => setTab(id as typeof tab)} style={{ marginBottom: 28 }} />
 
       {/* ── OVERVIEW ── */}
       {tab === 'overview' && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 16, alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 12, alignItems: 'start' }}>
 
-          {/* Updates */}
-          <div className="s-card" style={{ padding: 24 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-              <div style={{ width: 30, height: 30, borderRadius: 4, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--line)', display: 'grid', placeItems: 'center', color: 'var(--ink-1)' }}>
-                <PackageCheck style={{ width: 14, height: 14 }} />
-              </div>
-              <h2 style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)', letterSpacing: '-0.01em' }}>Syntra Optimizer Updates</h2>
-            </div>
+          {/* Left — Updates */}
+          <SCard title="Syntra Optimizer Updates" icon={PackageCheck}>
             <UpdateTimeline updates={updates} />
-          </div>
+          </SCard>
 
-          {/* Profile sidebar */}
+          {/* Right sidebar */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div className="s-card" style={{ padding: 20 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-                <div style={{ width: 30, height: 30, borderRadius: 4, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--line)', display: 'grid', placeItems: 'center', color: 'var(--ink-1)' }}>
-                  <User style={{ width: 14, height: 14 }} />
-                </div>
-                <h2 style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)', letterSpacing: '-0.01em' }}>Profile</h2>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+
+            {/* Profile card */}
+            <SCard title="Your Profile" icon={User}>
+              {/* Avatar + name */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                 <div style={{
-                  width: 40, height: 40, borderRadius: 6, flexShrink: 0,
-                  background: 'rgba(255,255,255,0.08)', border: '1px solid var(--line)',
+                  width: 44, height: 44, borderRadius: 6, flexShrink: 0,
+                  background: 'var(--bg-2)', border: '1px solid var(--line)',
                   display: 'grid', placeItems: 'center',
-                  fontSize: '0.78rem', fontWeight: 700, color: 'var(--ink-1)',
+                  fontSize: '0.82rem', fontWeight: 700, color: 'var(--ink-1)',
+                  letterSpacing: '-0.01em',
                 }}>{initials || 'SY'}</div>
                 <div style={{ minWidth: 0 }}>
-                  <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)', letterSpacing: '-0.01em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</p>
+                  <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)', letterSpacing: '-0.01em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginBottom: 2 }}>{name}</p>
                   <p style={{ fontSize: '0.75rem', color: 'var(--ink-3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{email}</p>
                 </div>
               </div>
+
+              {/* Badges */}
               <Badges />
-              <div style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+
+              {/* Meta */}
+              <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 9 }}>
                 {[
-                  { label: 'Member since', value: formatDate(user.created_at) },
-                  { label: 'Email verified', value: user.email_confirmed_at ? 'Yes' : 'No' },
+                  { icon: Clock, label: 'Member since', value: formatDate(user.created_at) },
+                  { icon: CheckCircle2, label: 'Email verified', value: user.email_confirmed_at ? 'Yes' : 'No' },
                 ].map(r => (
-                  <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem' }}>
-                    <span style={{ color: 'var(--ink-3)' }}>{r.label}</span>
-                    <span style={{ color: 'var(--ink-1)' }}>{r.value}</span>
+                  <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem' }}>
+                    <span style={{ color: 'var(--ink-3)', display: 'flex', alignItems: 'center', gap: 5 }}>
+                      <r.icon style={{ width: 11, height: 11 }} />{r.label}
+                    </span>
+                    <span style={{ color: 'var(--ink-1)', fontWeight: 500 }}>{r.value}</span>
                   </div>
                 ))}
               </div>
-            </div>
+            </SCard>
 
-            {/* Quick download */}
-            {hasPremium ? (
-              <a href="/api/download" className="btn-primary" style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}>
-                <Download style={{ width: 13, height: 13 }} />Download v1.1.1
-              </a>
-            ) : (
-              <Link href="/checkout?plan=premium" className="btn-primary" style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}>
-                <Crown style={{ width: 13, height: 13 }} />Get Premium
-              </Link>
-            )}
+            {/* Download card */}
+            <SCard title="Download" icon={Download}>
+              {hasPremium ? (
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                    <div>
+                      <p style={{ fontSize: '0.83rem', fontWeight: 600, color: 'var(--ink-0)', marginBottom: 3 }}>v1.1.1</p>
+                      <p style={{ fontSize: '0.72rem', color: 'var(--ink-3)' }}>Windows 10/11 · 105 MB</p>
+                    </div>
+                    <span className="s-tag" style={{ fontSize: '0.6rem' }}>Latest</span>
+                  </div>
+                  <a href="/api/download" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, width: '100%' }}>
+                    <Download style={{ width: 13, height: 13 }} />Download
+                  </a>
+                </div>
+              ) : (
+                <div>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--ink-2)', lineHeight: 1.55, marginBottom: 14 }}>
+                    Purchase a license to download Syntra Optimizer.
+                  </p>
+                  <Link href="/checkout?plan=premium" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}>
+                    <Crown style={{ width: 13, height: 13 }} />Get Premium
+                  </Link>
+                </div>
+              )}
+            </SCard>
           </div>
         </div>
       )}
 
       {/* ── DOWNLOADS ── */}
       {tab === 'downloads' && (
-        <div style={{ maxWidth: 560 }}>
-          <div className="s-card" style={{ padding: 28 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
-              <div style={{ width: 30, height: 30, borderRadius: 4, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--line)', display: 'grid', placeItems: 'center', color: 'var(--ink-1)' }}>
-                <Download style={{ width: 14, height: 14 }} />
-              </div>
-              <h2 style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)', letterSpacing: '-0.01em' }}>Syntra Optimizer</h2>
-            </div>
-
+        <div style={{ maxWidth: 600 }}>
+          <SCard title="Syntra Optimizer" icon={Download}>
             {!hasPremium ? (
-              <div style={{ textAlign: 'center', padding: '24px 0' }}>
-                <p style={{ fontSize: '0.875rem', color: 'var(--ink-2)', marginBottom: 20 }}>
-                  Purchase a license to download Syntra Optimizer.
+              <div style={{ textAlign: 'center', padding: '32px 0' }}>
+                <div style={{ width: 48, height: 48, borderRadius: 8, background: 'var(--bg-2)', border: '1px solid var(--line)', display: 'grid', placeItems: 'center', margin: '0 auto 16px', color: 'var(--ink-2)' }}>
+                  <Download style={{ width: 20, height: 20 }} />
+                </div>
+                <p style={{ fontSize: '0.875rem', color: 'var(--ink-2)', marginBottom: 20, maxWidth: '30ch', marginInline: 'auto', lineHeight: 1.55 }}>
+                  Purchase a Self-Service license to download Syntra Optimizer.
                 </p>
                 <Link href="/checkout?plan=premium" className="btn-primary" style={{ display: 'inline-flex', gap: 7 }}>
-                  <Crown style={{ width: 13, height: 13 }} />Get Premium
+                  <Crown style={{ width: 13, height: 13 }} />Get Premium — $15
                 </Link>
               </div>
             ) : (
-              <>
-                <div style={{ marginBottom: 20, padding: 16, background: 'var(--bg-2)', borderRadius: 4, border: '1px solid var(--line)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <span style={{ fontSize: '0.83rem', fontWeight: 600, color: 'var(--ink-0)' }}>Syntra Optimizer Setup</span>
-                    <span className="s-tag" style={{ fontSize: '0.62rem' }}>Latest</span>
+              <div>
+                {/* Release row */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', padding: '16px 0', borderBottom: '1px solid var(--line)' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)' }}>Syntra Optimizer Setup</span>
+                      <span className="s-tag" style={{ fontSize: '0.6rem', color: 'var(--ink-1)' }}>Latest</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: 14, fontSize: '0.75rem', color: 'var(--ink-3)' }}>
+                      <span>v1.1.1</span>
+                      <span>·</span>
+                      <span>Windows 10 / 11</span>
+                      <span>·</span>
+                      <span>105 MB</span>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', gap: 16, fontSize: '0.75rem', color: 'var(--ink-3)', marginBottom: 16 }}>
-                    <span>v1.1.1</span>
-                    <span>Windows 10/11</span>
-                    <span>105 MB</span>
-                  </div>
-                  <a href="/api/download" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, width: '100%' }}>
+                  <a href="/api/download" className="btn-primary" style={{ display: 'inline-flex', gap: 7, whiteSpace: 'nowrap' }}>
                     <Download style={{ width: 13, height: 13 }} />Download
                   </a>
                 </div>
-                <p style={{ fontSize: '0.75rem', color: 'var(--ink-3)', lineHeight: 1.5 }}>
-                  Your download is protected and linked to your account. Do not share this link.
+                <p style={{ marginTop: 14, fontSize: '0.75rem', color: 'var(--ink-3)', lineHeight: 1.55 }}>
+                  Your download is secured and tied to your account. Do not share the link.
                 </p>
-              </>
+              </div>
             )}
-          </div>
+          </SCard>
         </div>
       )}
 
       {/* ── SETTINGS ── */}
       {tab === 'settings' && (
-        <div style={{ maxWidth: 560, display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ maxWidth: 600 }}>
           <AccountSettings />
         </div>
       )}
