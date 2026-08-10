@@ -4,116 +4,47 @@ import { useEffect, useRef, useState } from 'react'
 import { Cpu, MonitorCog, MemoryStick } from 'lucide-react'
 import { SectionHeading } from '@/components/site/section-heading'
 
-type Benchmark = {
-  game: string
-  cpu: string
-  gpu: string
-  ram: string
-  before: number
-  after: number
-}
-
-const BENCHMARKS: Benchmark[] = [
-  { game: 'Fortnite', cpu: 'Ryzen 5 5600', gpu: 'RTX 3060', ram: '16GB DDR4', before: 142, after: 168 },
-  { game: 'Valorant', cpu: 'Core i5-12400F', gpu: 'RTX 3060 Ti', ram: '16GB DDR4', before: 288, after: 341 },
-  { game: 'CS2', cpu: 'Ryzen 7 5800X', gpu: 'RTX 4070', ram: '32GB DDR4', before: 246, after: 302 },
-  { game: 'Warzone', cpu: 'Core i7-13700K', gpu: 'RTX 4070 Ti', ram: '32GB DDR5', before: 118, after: 139 },
+const BENCHMARKS = [
+  { game: 'Fortnite',  cpu: 'Ryzen 5 5600',   gpu: 'RTX 3060',    ram: '16GB DDR4', before: 142, after: 168 },
+  { game: 'Valorant',  cpu: 'i5-12400F',       gpu: 'RTX 3060 Ti', ram: '16GB DDR4', before: 288, after: 341 },
+  { game: 'CS2',       cpu: 'Ryzen 7 5800X',   gpu: 'RTX 4070',    ram: '32GB DDR4', before: 246, after: 302 },
+  { game: 'Warzone',   cpu: 'i7-13700K',       gpu: 'RTX 4070 Ti', ram: '32GB DDR5', before: 118, after: 139 },
 ]
 
-function BenchmarkCard({ data, active }: { data: Benchmark; active: boolean }) {
-  const improvement = Math.round(((data.after - data.before) / data.before) * 100)
-  const maxFps = Math.max(data.before, data.after)
-  const beforePct = (data.before / maxFps) * 100
-  const afterPct = (data.after / maxFps) * 100
-
+function BCard({ d, active }: { d: typeof BENCHMARKS[0]; active: boolean }) {
+  const imp = Math.round(((d.after - d.before) / d.before) * 100)
+  const max = Math.max(d.before, d.after)
   return (
-    <div className="eco-card glass-card rounded-2xl p-6 overflow-hidden">
-      <div className="flex items-start justify-between gap-3">
-        <h3
-          className="text-base font-medium"
-          style={{ color: 'rgba(255,255,255,0.9)' }}
-        >
-          {data.game}
-        </h3>
-        <span
-          className="rounded-full px-2.5 py-1 text-xs font-semibold"
-          style={{
-            background: 'rgba(255,255,255,0.08)',
-            border: '1px solid rgba(255,255,255,0.12)',
-            color: 'rgba(255,255,255,0.75)',
-          }}
-        >
-          +{improvement}% FPS
-        </span>
+    <div className="s-card hover-lift" style={{ padding: 20 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+        <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--ink-0)', letterSpacing: '-0.01em' }}>{d.game}</h3>
+        <span className="s-tag" style={{ fontSize: '0.65rem', color: 'var(--ink-1)' }}>+{imp}% FPS</span>
       </div>
-
-      <dl className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
-        <div className="inline-flex items-center gap-1.5">
-          <Cpu className="size-3.5" />
-          {data.cpu}
-        </div>
-        <div className="inline-flex items-center gap-1.5">
-          <MonitorCog className="size-3.5" />
-          {data.gpu}
-        </div>
-        <div className="inline-flex items-center gap-1.5">
-          <MemoryStick className="size-3.5" />
-          {data.ram}
-        </div>
-      </dl>
-
-      <div className="mt-6 space-y-4">
-        {/* Before */}
-        <div>
-          <div className="mb-2 flex items-center justify-between text-xs">
-            <span style={{ color: 'rgba(255,255,255,0.35)' }}>Before</span>
-            <span
-              className="font-mono tabular-nums"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-            >
-              {data.before} FPS
-            </span>
-          </div>
-          <div
-            className="h-2 overflow-hidden rounded-full"
-            style={{ background: 'rgba(255,255,255,0.07)' }}
-          >
-            <div
-              className="h-full rounded-full transition-[width] duration-1000 ease-out"
-              style={{
-                width: active ? `${beforePct}%` : '0%',
-                background: 'rgba(255,255,255,0.22)',
-              }}
-            />
-          </div>
-        </div>
-
-        {/* After */}
-        <div>
-          <div className="mb-2 flex items-center justify-between text-xs">
-            <span className="font-medium" style={{ color: 'rgba(255,255,255,0.8)' }}>After</span>
-            <span
-              className="font-mono font-medium tabular-nums"
-              style={{ color: '#ffffff', textShadow: '0 0 12px rgba(255,255,255,0.5)' }}
-            >
-              {data.after} FPS
-            </span>
-          </div>
-          <div
-            className="h-2 overflow-hidden rounded-full"
-            style={{ background: 'rgba(255,255,255,0.07)' }}
-          >
-            <div
-              className="h-full rounded-full transition-[width] delay-200 duration-1000 ease-out"
-              style={{
-                width: active ? `${afterPct}%` : '0%',
-                background: 'linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.92) 100%)',
-                boxShadow: '0 0 10px rgba(255,255,255,0.3)',
-              }}
-            />
-          </div>
-        </div>
+      <div style={{ display: 'flex', gap: 12, marginBottom: 18, flexWrap: 'wrap' }}>
+        {[{ Icon: Cpu, v: d.cpu }, { Icon: MonitorCog, v: d.gpu }, { Icon: MemoryStick, v: d.ram }].map(({ Icon, v }) => (
+          <span key={v} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: '0.72rem', color: 'var(--ink-3)' }}>
+            <Icon style={{ width: 11, height: 11 }} />{v}
+          </span>
+        ))}
       </div>
+      {[{ label: 'Before', value: d.before, pct: (d.before / max) * 100, dim: true },
+        { label: 'After',  value: d.after,  pct: (d.after  / max) * 100, dim: false }].map(b => (
+        <div key={b.label} style={{ marginBottom: 10 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+            <span style={{ fontSize: '0.72rem', color: b.dim ? 'var(--ink-3)' : 'var(--ink-1)', fontWeight: b.dim ? 400 : 500 }}>{b.label}</span>
+            <span style={{ fontSize: '0.72rem', fontFamily: 'ui-monospace, monospace', color: b.dim ? 'var(--ink-3)' : 'var(--ink-0)', fontWeight: b.dim ? 400 : 600 }}>{b.value} FPS</span>
+          </div>
+          <div style={{ height: 4, background: 'var(--bg-3)', borderRadius: 2, overflow: 'hidden' }}>
+            <div style={{
+              height: '100%', borderRadius: 2,
+              width: active ? `${b.pct}%` : '0%',
+              background: b.dim ? 'var(--bg-4)' : 'linear-gradient(90deg, rgba(255,255,255,0.5), rgba(255,255,255,0.9))',
+              boxShadow: b.dim ? 'none' : '0 0 8px rgba(255,255,255,0.3)',
+              transition: `width 1.1s cubic-bezier(.4,0,.2,1) ${b.dim ? '0ms' : '180ms'}`,
+            }} />
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -121,38 +52,21 @@ function BenchmarkCard({ data, active }: { data: Benchmark; active: boolean }) {
 export function Benchmarks() {
   const ref = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(false)
-
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setActive(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.2 },
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setActive(true); obs.disconnect() } }, { threshold: 0.15 })
+    obs.observe(el); return () => obs.disconnect()
   }, [])
-
   return (
-    <section id="benchmarks" className="scroll-mt-16">
-      <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-        <SectionHeading
-          eyebrow="Real hardware, real gains"
-          title="Game benchmark: before vs after"
-          description="Average 1% low and mean FPS measured on real PC configurations, before and after running Syntra's Game Optimizer."
-        />
-        <div ref={ref} className="mt-14 grid gap-4 sm:grid-cols-2">
-          {BENCHMARKS.map((data) => (
-            <BenchmarkCard key={data.game} data={data} active={active} />
-          ))}
+    <section id="benchmarks" style={{ scrollMarginTop: 64 }}>
+      <div style={{ maxWidth: 1088, margin: '0 auto', padding: '96px 24px' }}>
+        <SectionHeading eyebrow="Real hardware, real gains" title="Game benchmark:" accent="before vs after." description="Average FPS measured on real PC configurations before and after Syntra's Game Optimizer." />
+        <div ref={ref} style={{ marginTop: 52, display: 'grid', gap: 8, gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+          {BENCHMARKS.map(d => <BCard key={d.game} d={d} active={active} />)}
         </div>
-        <p className="mt-6 text-center text-xs" style={{ color: 'rgba(255,255,255,0.28)' }}>
-          Results vary by hardware, drivers, and in-game settings. Figures shown are representative averages.
+        <p style={{ marginTop: 20, textAlign: 'center', fontSize: '0.72rem', color: 'var(--ink-3)' }}>
+          Results vary by hardware, drivers, and in-game settings.
         </p>
       </div>
     </section>

@@ -4,24 +4,17 @@ import { cn } from '@/lib/utils'
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <Link
-      href="/"
-      className={cn('inline-flex items-center gap-2.5', className)}
-      aria-label="Syntra Optimizer home"
-    >
+    <Link href="/" className={cn('inline-flex items-center gap-2', className)} aria-label="Syntra Optimizer home">
       <Image
         src="/syntra-logo.png"
         alt="Syntra"
-        width={32}
-        height={32}
-        className="rounded-xl"
+        width={28}
+        height={28}
+        style={{ borderRadius: 6 }}
         priority
       />
-      <span
-        className="text-base font-medium tracking-tight"
-        style={{ color: 'rgba(255,255,255,0.9)' }}
-      >
-        Syntra<span style={{ color: 'rgba(255,255,255,0.4)' }}>.</span>
+      <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--ink-0)', letterSpacing: '-0.02em' }}>
+        Syntra<span style={{ color: 'var(--ink-3)' }}>.</span>
       </span>
     </Link>
   )

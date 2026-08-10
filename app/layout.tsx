@@ -7,7 +7,7 @@ import { NoContextMenu } from '@/components/site/no-context-menu'
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-geist-sans',
+  variable: '--font-inter',
   display: 'swap',
   preload: true,
 })
@@ -105,7 +105,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${geistMono.variable} bg-background`}>
+    <html lang="en" className={`${inter.variable} ${geistMono.variable} bg-background`} style={{ fontFamily: 'var(--font-inter), ui-sans-serif, system-ui, sans-serif' }}>
       <body className="font-sans antialiased">
         <NoContextMenu />
         <LenisProvider />

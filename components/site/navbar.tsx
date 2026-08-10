@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X, User, Crown, Wrench } from 'lucide-react'
+import { Menu, X, Crown, Wrench, User } from 'lucide-react'
 import { Logo } from '@/components/site/logo'
 import { createClient } from '@/lib/supabase/client'
 
@@ -22,217 +22,139 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
-    const checkUser = async () => {
+    const init = async () => {
       const supabase = createClient()
       const { data: { session } } = await supabase.auth.getSession()
       setUser(session?.user || null)
-
       if (session?.user) {
-        const { data: roleData } = await supabase
-          .from('user_roles')
-          .select('role, service_count')
-          .eq('user_id', session.user.id)
-          .maybeSingle()
-        setUserRole(roleData?.role || 'free')
-        setServiceCount(roleData?.service_count || 0)
+        const { data } = await supabase.from('user_roles').select('role, service_count').eq('user_id', session.user.id).maybeSingle()
+        setUserRole(data?.role || 'free')
+        setServiceCount(data?.service_count || 0)
       }
-
       setLoading(false)
-
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_e, session) => {
         setUser(session?.user || null)
         if (session?.user) {
-          const { data: roleData } = await supabase
-            .from('user_roles')
-            .select('role, service_count')
-            .eq('user_id', session.user.id)
-            .maybeSingle()
-          setUserRole(roleData?.role || 'free')
-          setServiceCount(roleData?.service_count || 0)
-        } else {
-          setUserRole('free')
-        }
+          const { data } = await supabase.from('user_roles').select('role, service_count').eq('user_id', session.user.id).maybeSingle()
+          setUserRole(data?.role || 'free')
+          setServiceCount(data?.service_count || 0)
+        } else { setUserRole('free'); setServiceCount(0) }
       })
-
       return () => subscription.unsubscribe()
     }
-
-    checkUser()
+    init()
   }, [])
 
-  const getRoleBadge = () => (
-    <div className="flex items-center gap-1.5">
+  const badges = () => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
       {userRole === 'premium' && (
-        <div className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium"
-          style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
-          <Crown className="size-3" /> Premium
-        </div>
+        <span className="s-tag" style={{ gap: 5 }}><Crown style={{ width: 10, height: 10 }} />Premium</span>
       )}
       {serviceCount > 0 && (
-        <div className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium"
-          style={{ background: 'rgba(88,101,242,0.12)', color: 'rgba(180,185,255,0.9)' }}>
-          <Wrench className="size-3" />
-          {serviceCount > 1 ? `Service x${serviceCount}` : 'Service'}
-        </div>
+        <span className="s-tag" style={{ gap: 5, color: '#8ab4ff' }}><Wrench style={{ width: 10, height: 10 }} />{serviceCount > 1 ? `Service x${serviceCount}` : 'Service'}</span>
       )}
     </div>
   )
 
   return (
-    <header className="sticky top-0 z-50 flex justify-center px-4 pt-5">
-      {/* ── Glass pill navbar ── */}
-      <div
-        className="w-full max-w-[900px] transition-all duration-300"
-        style={{
-          borderRadius: 999,
-          background: scrolled
-            ? 'rgba(8, 8, 8, 0.72)'
-            : 'rgba(8, 8, 8, 0.42)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          backdropFilter: 'blur(18px) saturate(140%)',
-          WebkitBackdropFilter: 'blur(18px) saturate(140%)',
-          boxShadow: scrolled ? '0 8px 40px -12px rgba(0,0,0,0.7)' : 'none',
-        }}
-      >
-        <div className="flex h-14 items-center justify-between px-3 pl-4">
-          {/* Logo */}
+    <header style={{ position: 'sticky', top: 0, zIndex: 50, display: 'flex', justifyContent: 'center', padding: '16px 16px 0' }}>
+      <div style={{
+        width: '100%', maxWidth: 920,
+        background: scrolled ? 'rgba(10,10,10,0.88)' : 'rgba(10,10,10,0.55)',
+        border: '1px solid var(--line)',
+        borderRadius: 8,
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        boxShadow: scrolled ? '0 4px 32px -8px rgba(0,0,0,0.7)' : 'none',
+        transition: 'background 0.3s ease, box-shadow 0.3s ease',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 52, padding: '0 14px' }}>
           <Logo />
 
-          {/* Nav links — desktop */}
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rounded-full px-4 py-2 text-sm font-light transition-all duration-200 hover:bg-white/5"
-                style={{ color: 'rgba(255,255,255,0.6)' }}
-              >
-                {link.label}
-              </a>
+          {/* Desktop nav */}
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 2 }} className="hidden md:flex">
+            {NAV_LINKS.map(l => (
+              <a key={l.href} href={l.href} style={{
+                padding: '6px 14px', borderRadius: 4, fontSize: '0.83rem',
+                fontWeight: 400, color: 'var(--ink-2)',
+                transition: 'color 0.15s ease, background 0.15s ease',
+                textDecoration: 'none',
+              }}
+                onMouseEnter={e => { (e.target as HTMLElement).style.color = 'var(--ink-0)'; (e.target as HTMLElement).style.background = 'rgba(255,255,255,0.05)'; }}
+                onMouseLeave={e => { (e.target as HTMLElement).style.color = 'var(--ink-2)'; (e.target as HTMLElement).style.background = 'transparent'; }}
+              >{l.label}</a>
             ))}
           </nav>
 
-          {/* Actions — desktop */}
-          <div className="hidden items-center gap-2 md:flex">
+          {/* Actions */}
+          <div className="hidden md:flex" style={{ alignItems: 'center', gap: 8 }}>
             {loading ? (
-              <div
-                className="h-9 w-20 animate-pulse rounded-full"
-                style={{ background: 'rgba(255,255,255,0.06)' }}
-              />
+              <div style={{ width: 80, height: 32, background: 'var(--bg-2)', borderRadius: 4 }} />
             ) : user ? (
-              <div className="flex items-center gap-2">
-                {getRoleBadge()}
-                <Link
-                  href="/dashboard"
-                  className="inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm font-medium transition-all duration-200 hover:bg-white/8"
-                  style={{ color: 'rgba(255,255,255,0.75)' }}
-                >
-                  <User className="size-4" />
-                  Dashboard
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                {badges()}
+                <Link href="/dashboard" className="btn-ghost" style={{ padding: '6px 14px', fontSize: '0.83rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <User style={{ width: 13, height: 13 }} />Dashboard
                 </Link>
               </div>
             ) : (
               <>
-                <Link
-                  href="/login"
-                  className="inline-flex h-9 items-center rounded-full px-4 text-sm font-light transition-all duration-200 hover:bg-white/6"
-                  style={{ color: 'rgba(255,255,255,0.6)' }}
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/checkout?plan=premium"
-                  className="btn-bevel inline-flex h-9 items-center gap-2 rounded-full px-5 text-sm"
-                  style={{ boxShadow: '0 0 24px -6px rgba(255,255,255,0.5)' }}
-                >
-                  Get Started
-                </Link>
+                <Link href="/login" className="btn-ghost" style={{ padding: '6px 14px', fontSize: '0.83rem' }}>Log in</Link>
+                <Link href="/checkout?plan=premium" className="btn-primary" style={{ padding: '6px 16px', fontSize: '0.83rem' }}>Get Started</Link>
               </>
             )}
           </div>
 
-          {/* Hamburger — mobile */}
+          {/* Mobile toggle */}
           <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="grid size-9 place-items-center rounded-full transition-all duration-200 md:hidden"
+            onClick={() => setOpen(v => !v)}
+            className="md:hidden"
             style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              color: 'rgba(255,255,255,0.8)',
+              width: 34, height: 34, borderRadius: 4,
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid var(--line)',
+              color: 'var(--ink-1)', cursor: 'pointer',
+              display: 'grid', placeItems: 'center',
             }}
             aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
           >
-            {open ? <X className="size-4" /> : <Menu className="size-4" />}
+            {open ? <X style={{ width: 15, height: 15 }} /> : <Menu style={{ width: 15, height: 15 }} />}
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div
-          className="absolute top-[76px] left-4 right-4 rounded-2xl p-4 md:hidden"
-          style={{
-            background: 'rgba(8,8,8,0.9)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-          }}
-        >
-          <nav className="flex flex-col gap-1" aria-label="Mobile">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-2.5 text-sm transition-all duration-150 hover:bg-white/6"
-                style={{ color: 'rgba(255,255,255,0.6)' }}
-              >
-                {link.label}
-              </a>
+        <div className="md:hidden" style={{
+          position: 'absolute', top: 76, left: 16, right: 16,
+          background: 'rgba(10,10,10,0.95)', border: '1px solid var(--line)',
+          borderRadius: 8, padding: 12,
+          backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+        }}>
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {NAV_LINKS.map(l => (
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{
+                padding: '10px 12px', borderRadius: 4, fontSize: '0.875rem',
+                color: 'var(--ink-2)', textDecoration: 'none',
+              }}>{l.label}</a>
             ))}
           </nav>
-          <div className="mt-3 flex flex-col gap-2 border-t pt-3" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
-            {loading ? (
-              <div className="h-10 w-full animate-pulse rounded-xl" style={{ background: 'rgba(255,255,255,0.06)' }} />
-            ) : user ? (
-              <div className="flex flex-col gap-2">
-                {getRoleBadge()}
-                <Link
-                  href="/dashboard"
-                  onClick={() => setOpen(false)}
-                  className="flex h-10 items-center gap-2 rounded-xl px-4 text-sm font-medium"
-                  style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)' }}
-                >
-                  <User className="size-4" />
-                  Dashboard
-                </Link>
-              </div>
+          <div style={{ borderTop: '1px solid var(--line)', marginTop: 8, paddingTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {user ? (
+              <>
+                {badges()}
+                <Link href="/dashboard" onClick={() => setOpen(false)} className="btn-ghost" style={{ textAlign: 'center' }}>Dashboard</Link>
+              </>
             ) : (
               <>
-                <Link
-                  href="/login"
-                  onClick={() => setOpen(false)}
-                  className="flex h-10 items-center justify-center rounded-xl text-sm"
-                  style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.65)' }}
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/checkout?plan=premium"
-                  onClick={() => setOpen(false)}
-                  className="flex h-10 items-center justify-center rounded-xl text-sm font-semibold"
-                  style={{ background: 'rgba(255,255,255,0.92)', color: '#080808' }}
-                >
-                  Get Started
-                </Link>
+                <Link href="/login" onClick={() => setOpen(false)} className="btn-ghost" style={{ textAlign: 'center' }}>Log in</Link>
+                <Link href="/checkout?plan=premium" onClick={() => setOpen(false)} className="btn-primary" style={{ textAlign: 'center' }}>Get Started</Link>
               </>
             )}
           </div>
