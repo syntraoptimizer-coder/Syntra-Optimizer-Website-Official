@@ -41,11 +41,11 @@ export function Hero() {
 
       {/* Glows */}
       <div aria-hidden="true" className="glow glow-white"
-        style={{ left: '50%', top: '-4%', width: 860, height: 580, opacity: 0.32, zIndex: 0 }} />
+        style={{ left: '50%', top: '-4%', width: 1000, height: 700, opacity: 0.55, zIndex: 0 }} />
       <div aria-hidden="true" className="glow glow-soft"
-        style={{ left: '15%', top: '40%', width: 500, height: 600, opacity: 0.18, zIndex: 0 }} />
+        style={{ left: '15%', top: '40%', width: 600, height: 700, opacity: 0.32, zIndex: 0 }} />
       <div aria-hidden="true" className="glow glow-soft"
-        style={{ left: '85%', top: '32%', width: 400, height: 500, opacity: 0.15, zIndex: 0 }} />
+        style={{ left: '85%', top: '32%', width: 500, height: 600, opacity: 0.28, zIndex: 0 }} />
 
       {/* Hero grid */}
       <div className="hero-grid" aria-hidden="true" />

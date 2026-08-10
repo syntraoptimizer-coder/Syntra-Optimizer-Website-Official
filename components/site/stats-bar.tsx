@@ -64,11 +64,16 @@ export function StatsBar() {
     return () => obs.disconnect()
   }, [])
   return (
-    <section style={{ borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+    <section style={{ borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', overflow: 'hidden', position: 'relative' }}>
+      {/* Ambient glow */}
+      <div aria-hidden="true" className="glow glow-white" style={{
+        position: 'absolute', left: '50%', top: '50%',
+        width: 600, height: 300, opacity: 0.12, zIndex: 0,
+      }} />
       <div ref={ref} style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         maxWidth: 1024, margin: '0 auto', padding: '52px 24px',
-        flexWrap: 'wrap', gap: 0,
+        flexWrap: 'wrap', gap: 0, position: 'relative', zIndex: 1,
       }}>
         {STATS.map((s, i) => (
           <div key={s.label} style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: 140 }}>
