@@ -56,17 +56,22 @@ function FeatureCard({ f, index }: { f: Feature; index: number }) {
       }}
     >
       {/* Image */}
-      <div style={{ position: 'relative', height: 160, overflow: 'hidden', background: 'var(--bg-2)', flexShrink: 0 }}>
+      <div style={{ position: 'relative', height: 180, overflow: 'hidden', background: 'var(--bg-2)', flexShrink: 0 }}>
         <Image
           src={f.image}
           alt={f.title}
           fill
-          style={{ objectFit: 'contain', padding: 16, filter: 'drop-shadow(0 4px 20px rgba(255,255,255,0.1))' }}
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'top',
+            filter: 'drop-shadow(0 4px 24px rgba(255,255,255,0.08))',
+            transition: 'transform 0.4s ease',
+          }}
           sizes="(max-width: 768px) 100vw, 33vw"
         />
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.04) 0%, transparent 70%)',
+          background: 'linear-gradient(to bottom, transparent 40%, rgba(8,8,8,0.7) 100%)',
           pointerEvents: 'none',
         }} />
       </div>
