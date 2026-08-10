@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { Logo } from '@/components/site/logo'
 
@@ -29,11 +31,9 @@ export function Footer() {
                 <a key={label} href="#" aria-label={label} style={{
                   width: 32, height: 32, borderRadius: 4,
                   border: '1px solid var(--line)', display: 'grid', placeItems: 'center',
-                  color: 'var(--ink-3)', transition: 'border-color 0.15s ease, color 0.15s ease',
-                }}
-                  onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = 'var(--line-2)'; el.style.color = 'var(--ink-1)'; }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = 'var(--line)'; el.style.color = 'var(--ink-3)'; }}
-                >
+                  color: 'var(--ink-3)', textDecoration: 'none',
+                  transition: 'border-color 0.15s ease, color 0.15s ease',
+                }}>
                   <Icon />
                 </a>
               ))}
@@ -45,10 +45,9 @@ export function Footer() {
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {links.map(l => (
                   <li key={l.label}>
-                    <Link href={l.href} style={{ fontSize: '0.83rem', color: 'var(--ink-3)', textDecoration: 'none', transition: 'color 0.15s ease' }}
-                      onMouseEnter={e => (e.currentTarget.style.color = 'var(--ink-0)')}
-                      onMouseLeave={e => (e.currentTarget.style.color = 'var(--ink-3)')}
-                    >{l.label}</Link>
+                    <Link href={l.href} style={{ fontSize: '0.83rem', color: 'var(--ink-3)', textDecoration: 'none' }}>
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
