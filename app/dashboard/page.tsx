@@ -36,7 +36,7 @@ export default async function DashboardPage() {
   const initials = name.split(' ').map((p: string) => p[0]).join('').slice(0, 2).toUpperCase()
 
   return (
-    <div style={{ minHeight: '100dvh', background: 'var(--bg-0)' }}>
+    <div style={{ minHeight: '100dvh', background: 'var(--bg-0)', fontFamily: 'var(--font-inter), ui-sans-serif, system-ui, sans-serif' }}>
       <WelcomeToast name={name.split(' ')[0]} />
 
       {/* Ambient glow */}

@@ -80,7 +80,7 @@ export function Features() {
 
   return (
     <section id="features" style={{ scrollMarginTop: 64 }}>
-      <div ref={containerRef} style={{ height: `${(FEATURES.length + 1) * 100}vh` }}>
+      <div ref={containerRef} style={{ height: `${100 + FEATURES.length * 35}vh` }}>
         <div style={{
           position: 'sticky', top: 0, height: '100vh', overflow: 'hidden',
           borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)',
