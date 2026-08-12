@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Logo } from '@/components/site/logo'
 
 const NAV = {
-  Product:  [{ label: 'Features', href: '#features' }, { label: 'Benchmarks', href: '#benchmarks' }, { label: 'Pricing', href: '#pricing' }, { label: 'Download', href: '/checkout?plan=premium' }],
+  Product:  [{ label: 'Features', href: '#features' }, { label: 'Benchmarks', href: '#benchmarks' }, { label: 'Pricing', href: '#pricing' }, { label: 'Changelog', href: '/changelog' }, { label: 'Download', href: '/checkout?plan=premium' }],
   Company:  [{ label: 'About', href: '#' }, { label: 'Blog', href: '#' }, { label: 'Contact', href: '#' }],
   Legal:    [{ label: 'Privacy', href: '/privacy' }, { label: 'Terms', href: '/terms' }, { label: 'Refund Policy', href: '/refund-policy' }],
 }

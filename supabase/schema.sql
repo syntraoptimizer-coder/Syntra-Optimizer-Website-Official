@@ -60,10 +60,9 @@ create policy "Users can update their own profile"
   on public.profiles for update
   using (auth.uid() = id);
 
--- updates: everyone logged-in can read; only service role writes
-create policy "Authenticated users can view updates"
+-- updates: everyone (including public) can read; only service role writes
+create policy "Public can view updates"
   on public.updates for select
-  to authenticated
   using (true);
 
 -- 3) Seed changelog
