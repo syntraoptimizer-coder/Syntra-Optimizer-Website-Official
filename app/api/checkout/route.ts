@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   const origin = req.headers.get('origin') || 'https://www.syntraoptimizer.site'
 
   const session = await stripe.checkout.sessions.create({
-    mode: plan === 'service' ? 'subscription' : 'payment',
+    mode: 'payment',
     line_items: [
       {
         price: priceId,

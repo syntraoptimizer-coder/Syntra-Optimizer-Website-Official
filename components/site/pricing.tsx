@@ -14,10 +14,10 @@ const PLANS = [
     perks: ['Full Syntra Optimizer license', 'All modules unlocked', 'Unlimited optimizations', 'Lifetime updates', 'Community support'],
   },
   {
-    name: 'Done-For-You', price: 6, tagline: 'Per month',
-    description: 'Monthly remote optimization sessions. A Syntra expert tunes your PC every month while you watch, with continuous performance tracking and adjustments as new games are released.',
-    cta: 'Subscribe now', href: '/checkout?plan=service', featured: true, requiresPremium: true,
-    perks: ['Monthly remote optimization session', 'No install required', 'Expert-tuned game settings updated regularly', 'Live before/after score report each session', 'Priority chat support', 'Continuous performance tracking'],
+    name: 'Done-For-You', price: 6, tagline: 'Per session',
+    description: 'A Syntra expert optimizes your PC remotely. Book as often as you\'d like — most clients check in monthly. Nothing to install on your end.',
+    cta: 'Book an expert', href: '/checkout?plan=service', featured: true, requiresPremium: true,
+    perks: ['Personal remote optimization', 'No install required', 'Expert-tuned game settings', 'Live before/after score report', 'Priority chat support'],
   },
 ]
 
