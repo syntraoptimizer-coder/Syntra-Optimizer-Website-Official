@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import Image from 'next/image'
 import { SectionHeading } from '@/components/site/section-heading'
+import { Activity, Zap, LogIn } from 'lucide-react'
 
 const SLIDES = [
-  { image: '/images/app-dashboard.png', label: 'Dashboard', title: 'Real-time PC performance', description: 'Monitor CPU, RAM, Disk and Network live. Get AI-powered recommendations and optimize your system in one click.', tag: '01' },
-  { image: '/images/app-updates.png',   label: 'Performance', title: 'New optimizations every release', description: 'Each release brings new performance tweaks, stability fixes, and advanced tools. Stay ahead automatically.', tag: '02' },
-  { image: '/images/app-login.png',     label: 'Quick Access', title: 'Sign in and start optimizing', description: 'Get started in seconds with Google or Discord. Your settings and history are saved to your account.', tag: '03' },
+  { icon: Activity, label: 'Dashboard', title: 'Real-time PC performance', description: 'Monitor CPU, RAM, Disk and Network live. Get AI-powered recommendations and optimize your system in one click.', tag: '01', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+  { icon: Zap,    label: 'Performance', title: 'New optimizations every release', description: 'Each release brings new performance tweaks, stability fixes, and advanced tools. Stay ahead automatically.', tag: '02', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
+  { icon: LogIn,  label: 'Quick Access', title: 'Sign in and start optimizing', description: 'Get started in seconds with Google or Discord. Your settings and history are saved to your account.', tag: '03', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
 ]
 
 export function AppShowcase() {
@@ -28,26 +28,61 @@ export function AppShowcase() {
   return (
     <section style={{ borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
       <div style={{ maxWidth: 1088, margin: '0 auto', padding: '96px 24px' }}>
-        <SectionHeading eyebrow="See it in action" title="Built for performance," accent="designed for you." description="A powerful Windows optimizer with a clean, modern interface." />
+        <SectionHeading eyebrow="See it in action" title="Optimize Your System," accent="Boost Your Experience." description="A powerful Windows optimizer with a clean, modern interface." />
 
         <div style={{ marginTop: 60, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
 
-          {/* Image */}
+          {/* Icon/Gradient visual */}
           <div style={{
-            position: 'relative', borderRadius: 6, overflow: 'hidden',
-            border: '1px solid var(--line)', aspectRatio: '16/10',
+            position: 'relative', borderRadius: 12, overflow: 'hidden',
+            border: '1px solid var(--line)', aspectRatio: '1/1',
             opacity: fading ? 0 : 1, transform: fading ? 'scale(0.99)' : 'scale(1)',
             transition: 'opacity 0.28s ease, transform 0.28s ease',
             boxShadow: '0 24px 64px -16px rgba(0,0,0,0.7)',
+            background: s.gradient,
+            display: 'grid',
+            placeItems: 'center',
           }}>
-            <Image src={s.image} alt={s.label} fill className="object-cover object-top" priority />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '28%', background: 'linear-gradient(to top, rgba(10,10,10,0.65), transparent)', pointerEvents: 'none' }} />
+            {/* Animated pattern */}
             <div style={{
-              position: 'absolute', bottom: 10, left: 10,
-              padding: '3px 7px', background: 'rgba(10,10,10,0.8)',
-              border: '1px solid var(--line)', borderRadius: 3,
-              fontFamily: 'ui-monospace, monospace', fontSize: '0.62rem',
+              position: 'absolute',
+              inset: 0,
+              opacity: 0.1,
+              backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.8) 1px, transparent 0)',
+              backgroundSize: '24px 24px',
+              pointerEvents: 'none',
+            }} />
+
+            {/* Icon */}
+            <div style={{
+              position: 'relative',
+              width: 120,
+              height: 120,
+              borderRadius: '50%',
+              background: 'rgba(255,255,255,0.15)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.3)',
+              display: 'grid',
+              placeItems: 'center',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+            }}>
+              <s.icon style={{ width: 60, height: 60, color: 'white' }} />
+            </div>
+
+            {/* Glow effect */}
+            <div aria-hidden="true" style={{
+              position: 'absolute', left: '50%', top: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 250, height: 250, borderRadius: '50%',
+              background: 'radial-gradient(closest-side, rgba(255,255,255,0.3) 0%, transparent 70%)',
+              filter: 'blur(50px)', pointerEvents: 'none',
+            }} />
+
+            <div style={{
+              position: 'absolute', bottom: 16, left: 16,
+              padding: '6px 12px', background: 'rgba(10,10,10,0.8)',
+              border: '1px solid var(--line)', borderRadius: 6,
+              fontFamily: 'ui-monospace, monospace', fontSize: '0.68rem',
               letterSpacing: '0.1em', color: 'var(--ink-3)',
             }}>{s.tag} / 0{SLIDES.length}</div>
           </div>

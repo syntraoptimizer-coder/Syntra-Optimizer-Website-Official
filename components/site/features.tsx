@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
 import { Zap, Gamepad2, Wifi, Trash2, MemoryStick, Settings2, ArrowRight, type LucideIcon } from 'lucide-react'
 
 type Feature = {
@@ -10,16 +9,16 @@ type Feature = {
   title: string
   tag: string
   description: string
-  image: string
+  gradient: string
 }
 
 const FEATURES: Feature[] = [
-  { icon: Zap,         number: '01', title: 'Windows Performance', tag: 'Faster PC',        image: '/images/feat-windows.png',  description: 'Boost responsiveness, speed up startup, and eliminate background activity. Disable telemetry, clean registry bloat, and remove auto-start programs for maximum efficiency.' },
-  { icon: Gamepad2,    number: '02', title: 'Gaming Experience',   tag: 'Higher FPS',       image: '/images/feat-gaming.png',   description: 'Improve FPS, reduce stuttering, minimize input lag, and optimize CPU and GPU resources. Per-game priority and HAGS configuration for consistent high frames.' },
-  { icon: Wifi,        number: '03', title: 'Network Boost',       tag: 'Lower Ping',       image: '/images/feat-network.png',  description: 'Reduce latency with TCP/IP stack tuning, DNS prefetch, Nagle algorithm disable, and QoS prioritization. Cut your average ping by 15–30ms.' },
-  { icon: Trash2,      number: '04', title: 'Deep Cleanup',        tag: 'Cleaner Windows',  image: '/images/feat-cleanup.png',  description: 'Remove temp files, cache, and system clutter. Safely clear Windows Update cache, thumbnail databases, and prefetch files. Recover 8–15GB on average.' },
-  { icon: MemoryStick, number: '05', title: 'Memory Optimization', tag: 'Better Stability', image: '/images/feat-memory.png',   description: 'Release trapped kernel memory, compress standby list, and adjust working set policies to keep RAM allocation optimal during intensive gaming sessions.' },
-  { icon: Settings2,   number: '06', title: 'Advanced Tweaks',     tag: 'Pro Performance',  image: '/images/feat-advanced.png', description: 'Expose BIOS-level settings, Resizable BAR, XMP/EXPO memory profiles, and GPU driver tweaks normally reserved for enthusiasts and overclockers.' },
+  { icon: Zap,         number: '01', title: 'Windows Performance', tag: 'Faster PC',        gradient: 'linear-gradient(135deg, #ff6b6b 0%, #feca57 100%)',  description: 'Boost responsiveness, speed up startup, and eliminate background activity. Disable telemetry, clean registry bloat, and remove auto-start programs for maximum efficiency.' },
+  { icon: Gamepad2,    number: '02', title: 'Gaming Experience',   tag: 'Higher FPS',       gradient: 'linear-gradient(135deg, #48dbfb 0%, #0abde3 100%)',   description: 'Improve FPS, reduce stuttering, minimize input lag, and optimize CPU and GPU resources. Per-game priority and HAGS configuration for consistent high frames.' },
+  { icon: Wifi,        number: '03', title: 'Network Boost',       tag: 'Lower Ping',       gradient: 'linear-gradient(135deg, #5f27cd 0%, #341f97 100%)',  description: 'Reduce latency with TCP/IP stack tuning, DNS prefetch, Nagle algorithm disable, and QoS prioritization. Cut your average ping by 15–30ms.' },
+  { icon: Trash2,      number: '04', title: 'Deep Cleanup',        tag: 'Cleaner Windows',  gradient: 'linear-gradient(135deg, #1dd1a1 0%, #10ac84 100%)',  description: 'Remove temp files, cache, and system clutter. Safely clear Windows Update cache, thumbnail databases, and prefetch files. Recover 8–15GB on average.' },
+  { icon: MemoryStick, number: '05', title: 'Memory Optimization', tag: 'Better Stability', gradient: 'linear-gradient(135deg, #ff9ff3 0%, #f368e0 100%)',   description: 'Release trapped kernel memory, compress standby list, and adjust working set policies to keep RAM allocation optimal during intensive gaming sessions.' },
+  { icon: Settings2,   number: '06', title: 'Advanced Tweaks',     tag: 'Pro Performance',  gradient: 'linear-gradient(135deg, #54a0ff 0%, #2e86de 100%)', description: 'Expose BIOS-level settings, Resizable BAR, XMP/EXPO memory profiles, and GPU driver tweaks normally reserved for enthusiasts and overclockers.' },
 ]
 
 function FeatureRow({ f, index }: { f: Feature; index: number }) {
@@ -111,43 +110,52 @@ function FeatureRow({ f, index }: { f: Feature; index: number }) {
         </div>
       </div>
 
-      {/* Image side */}
+      {/* Gradient visual side */}
       <div style={{
         position: 'relative',
         overflow: 'hidden',
-        background: 'var(--bg-0)',
+        background: f.gradient,
         minHeight: 280,
         direction: 'ltr',
         borderLeft: isEven ? '1px solid var(--line)' : 'none',
         borderRight: isEven ? 'none' : '1px solid var(--line)',
+        display: 'grid',
+        placeItems: 'center',
       }}>
-        {/* Dot grid */}
-        <div className="dot-grid" aria-hidden="true" style={{
-          position: 'absolute', inset: 0, opacity: 0.2, pointerEvents: 'none',
+        {/* Animated pattern */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          opacity: 0.15,
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.8) 1px, transparent 0)',
+          backgroundSize: '32px 32px',
+          pointerEvents: 'none',
         }} />
 
-        {/* Glow behind image */}
+        {/* Icon in center */}
+        <div style={{
+          position: 'relative',
+          width: 80,
+          height: 80,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.15)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255,255,255,0.3)',
+          display: 'grid',
+          placeItems: 'center',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+        }}>
+          <f.icon style={{ width: 40, height: 40, color: 'white' }} />
+        </div>
+
+        {/* Glow effect */}
         <div aria-hidden="true" style={{
           position: 'absolute', left: '50%', top: '50%',
           transform: 'translate(-50%, -50%)',
-          width: 300, height: 300, borderRadius: '50%',
-          background: 'radial-gradient(closest-side, rgba(255,255,255,0.08) 0%, transparent 70%)',
-          filter: 'blur(30px)', pointerEvents: 'none',
+          width: 200, height: 200, borderRadius: '50%',
+          background: 'radial-gradient(closest-side, rgba(255,255,255,0.3) 0%, transparent 70%)',
+          filter: 'blur(40px)', pointerEvents: 'none',
         }} />
-
-        <Image
-          src={f.image}
-          alt={f.title}
-          fill
-          style={{
-            objectFit: 'contain',
-            objectPosition: 'center',
-            padding: '20px 24px',
-            filter: 'drop-shadow(0 8px 32px rgba(255,255,255,0.14))',
-            transition: 'transform 0.5s ease',
-          }}
-          sizes="50vw"
-        />
       </div>
     </div>
   )
@@ -190,8 +198,8 @@ export function Features() {
             fontSize: 'clamp(1.9rem, 3.8vw, 3rem)', fontWeight: 700,
             letterSpacing: '-0.035em', lineHeight: 1.08, margin: '0 0 14px',
           }}>
-            <span style={{ color: 'var(--ink-2)' }}>Unlock Your PC's Full </span>
-            <span style={{ color: 'var(--ink-0)' }}>Potential.</span>
+            <span style={{ color: 'var(--ink-2)' }}>Transform Your System </span>
+            <span style={{ color: 'var(--ink-0)' }}>Performance.</span>
           </h2>
           <p style={{ fontSize: '0.95rem', color: 'var(--ink-2)', lineHeight: 1.65, maxWidth: '52ch', marginInline: 'auto' }}>
             Powerful optimization tools designed to maximize Windows performance, increase gaming FPS, reduce latency, and keep your PC running like new.
