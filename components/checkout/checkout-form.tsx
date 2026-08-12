@@ -60,14 +60,21 @@ export function CheckoutForm({ user, plan }: CheckoutFormProps) {
         body: JSON.stringify({ plan }),
       })
 
+      if (!res.ok) {
+        const errorText = await res.text()
+        console.error('Checkout API error:', res.status, errorText)
+        throw new Error(errorText || 'Failed to create checkout session')
+      }
+
       const data = await res.json()
 
-      if (!res.ok || !data.url) {
-        throw new Error(data.error || 'Failed to create checkout session')
+      if (!data.url) {
+        throw new Error('No checkout URL returned from server')
       }
 
       window.location.href = data.url
     } catch (err: any) {
+      console.error('Checkout error:', err)
       setError(err.message || 'Something went wrong. Please try again.')
       setLoading(false)
     }
