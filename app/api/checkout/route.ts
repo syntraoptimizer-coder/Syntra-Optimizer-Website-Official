@@ -3,8 +3,8 @@ import Stripe from 'stripe'
 import { createClient } from '@/lib/supabase/server'
 
 const PRICES = {
-  premium: process.env.STRIPE_PRICE_PREMIUM!,
-  service: process.env.STRIPE_PRICE_SERVICE!,
+  premium: process.env.STRIPE_PRICE_PREMIUM,
+  service: process.env.STRIPE_PRICE_SERVICE,
 }
 
 export async function POST(req: Request) {
@@ -24,8 +24,14 @@ export async function POST(req: Request) {
 
   const { plan } = await req.json()
 
-  if (!plan || !PRICES[plan as keyof typeof PRICES]) {
-    return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
+  if (!plan) {
+    return NextResponse.json({ error: 'Plan is required' }, { status: 400 })
+  }
+
+  const priceId = PRICES[plan as keyof typeof PRICES]
+  if (!priceId) {
+    console.error(`Price ID not configured for plan: ${plan}`)
+    return NextResponse.json({ error: `Price not configured for plan: ${plan}` }, { status: 500 })
   }
 
   const origin = req.headers.get('origin') || 'https://www.syntraoptimizer.site'
@@ -34,7 +40,7 @@ export async function POST(req: Request) {
     mode: plan === 'service' ? 'subscription' : 'payment',
     line_items: [
       {
-        price: PRICES[plan as keyof typeof PRICES],
+        price: priceId,
         quantity: 1,
       },
     ],
