@@ -6,7 +6,7 @@ import { CheckoutForm } from '@/components/checkout/checkout-form'
 
 export const metadata: Metadata = {
   title: 'Checkout — Syntra Optimizer',
-  description: 'Complete your Syntra Optimizer purchase. One-time payment, instant access.',
+  description: 'Complete your Syntra Optimizer purchase. One-time payment or monthly subscription.',
   robots: { index: false },
 }
 
