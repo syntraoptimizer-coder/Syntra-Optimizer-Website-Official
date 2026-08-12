@@ -54,7 +54,7 @@ export function DashboardTabs({ user, name, email, role, serviceCount, initials,
   const Badges = () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
       {role === 'premium' && <span className="s-tag" style={{ gap: 5 }}><Crown style={{ width: 10, height: 10 }} />Premium</span>}
-      {serviceCount > 0 && <span className="s-tag" style={{ gap: 5, color: '#8ab4ff' }}><Wrench style={{ width: 10, height: 10 }} />{serviceCount > 1 ? `Service x${serviceCount}` : 'Service'}</span>}
+      {serviceCount > 0 && <span className="s-tag" style={{ gap: 5, color: '#8ab4ff' }}><Wrench style={{ width: 10, height: 10 }} />{serviceCount} session{serviceCount > 1 ? 's' : ''} purchased</span>}
       {role === 'free' && serviceCount === 0 && <span className="s-tag" style={{ color: 'var(--ink-3)' }}>Free</span>}
     </div>
   )
@@ -136,6 +136,20 @@ export function DashboardTabs({ user, name, email, role, serviceCount, initials,
                   </Link>
                 </div>
               )}
+            </SCard>
+
+            {/* Done-For-You service card */}
+            <SCard title="Done-For-You Service" icon={Wrench}>
+              <div>
+                <p style={{ fontSize: '0.82rem', color: 'var(--ink-2)', lineHeight: 1.55, marginBottom: 14 }}>
+                  {serviceCount > 0
+                    ? `You've purchased ${serviceCount} session${serviceCount > 1 ? 's' : ''}. Book another expert optimization session for maximum performance.`
+                    : 'Get expert optimization done for you. We\'ll remotely configure your PC for maximum performance.'}
+                </p>
+                <Link href="/checkout?plan=service" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}>
+                  <Wrench style={{ width: 13, height: 13 }} />{serviceCount > 0 ? 'Book another session' : 'Book a session'}
+                </Link>
+              </div>
             </SCard>
           </div>
         </div>

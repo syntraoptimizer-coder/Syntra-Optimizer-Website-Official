@@ -58,7 +58,7 @@ export function Navbar() {
         <span className="s-tag" style={{ gap: 5 }}><Crown style={{ width: 10, height: 10 }} />Premium</span>
       )}
       {serviceCount > 0 && (
-        <span className="s-tag" style={{ gap: 5, color: '#8ab4ff' }}><Wrench style={{ width: 10, height: 10 }} />{serviceCount > 1 ? `Service x${serviceCount}` : 'Service'}</span>
+        <span className="s-tag" style={{ gap: 5, color: '#8ab4ff' }}><Wrench style={{ width: 10, height: 10 }} />{serviceCount} session{serviceCount > 1 ? 's' : ''} purchased</span>
       )}
     </div>
   )
