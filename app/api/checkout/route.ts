@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 })
   }
 
-  const stripe = new Stripe(stripeKey, { apiVersion: '2024-11-20.acacia' })
+  const stripe = new Stripe(stripeKey, { apiVersion: '2026-07-29.dahlia' })
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
   const origin = req.headers.get('origin') || 'https://www.syntraoptimizer.site'
 
   const session = await stripe.checkout.sessions.create({
-    mode: 'payment',
+    mode: plan === 'service' ? 'subscription' : 'payment',
     line_items: [
       {
         price: PRICES[plan as keyof typeof PRICES],

@@ -8,7 +8,7 @@ const FAQS = [
   { q: 'Is Syntra safe to use on my PC?', a: 'Yes. Every change Syntra makes is reversible, and the app creates a restore point before optimizing. You can review and undo any tweak at any time.' },
   { q: 'Which versions of Windows are supported?', a: 'Syntra fully supports Windows 10 and Windows 11 (64-bit). Older versions are not supported.' },
   { q: 'What is your refund policy?', a: 'If Syntra does not improve your system, contact us within 14 days of purchase for a full refund — no questions asked.' },
-  { q: 'How does the Done-For-You service work?', a: 'After booking, a Syntra expert connects to your PC through a secure remote tool. They run the full optimization while you watch, then share a before/after report.' },
+  { q: 'How does the Done-For-You service work?', a: 'After subscribing, a Syntra expert connects to your PC monthly through a secure remote tool. They run the full optimization while you watch, then share a before/after report. The session repeats every month to keep your system at peak performance.' },
   { q: 'Is remote access safe for the Done-For-You plan?', a: 'Absolutely. Sessions use encrypted, one-time access that you approve and can end instantly. Access is revoked the moment the session finishes.' },
   { q: 'Will optimizing affect my warranty or files?', a: 'No. Syntra only adjusts software settings and clears temporary data — it never touches your personal files or hardware warranty.' },
 ]

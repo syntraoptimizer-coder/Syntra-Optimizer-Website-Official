@@ -22,15 +22,16 @@ const PLANS = {
   service: {
     name: 'Syntra Optimizer Service',
     price: '$6',
-    tagline: 'Per session',
-    description: 'A Syntra expert optimizes your PC remotely. Nothing to install on your end.',
+    tagline: 'Per month',
+    description: 'Monthly remote optimization sessions. A Syntra expert tunes your PC every month while you watch, with continuous performance tracking and adjustments as new games are released.',
     icon: Wrench,
     perks: [
-      'Personal remote optimization',
+      'Monthly remote optimization session',
       'No install required',
-      'Expert-tuned game settings',
-      'Live before/after score report',
+      'Expert-tuned game settings updated regularly',
+      'Live before/after score report each session',
       'Priority chat support',
+      'Continuous performance tracking',
     ],
   },
 }
