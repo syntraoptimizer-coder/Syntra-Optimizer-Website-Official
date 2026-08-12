@@ -55,10 +55,10 @@ export function Navbar() {
   const badges = () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
       {userRole === 'premium' && (
-        <span className="s-tag" style={{ gap: 5 }}><Crown style={{ width: 10, height: 10 }} />Premium</span>
+        <span className="s-tag" style={{ gap: 5, whiteSpace: 'nowrap' }}><Crown style={{ width: 10, height: 10 }} />Premium</span>
       )}
       {serviceCount > 0 && (
-        <span className="s-tag" style={{ gap: 5, color: '#8ab4ff' }}><Wrench style={{ width: 10, height: 10 }} />{serviceCount} session{serviceCount > 1 ? 's' : ''} purchased</span>
+        <span className="s-tag" style={{ gap: 5, color: '#8ab4ff', whiteSpace: 'nowrap' }}><Wrench style={{ width: 10, height: 10 }} />×{serviceCount}</span>
       )}
     </div>
   )
@@ -99,7 +99,7 @@ export function Navbar() {
               <div style={{ width: 80, height: 32, background: 'var(--bg-2)', borderRadius: 4 }} />
             ) : user ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                {badges()}
+                <div className="hidden lg:flex">{badges()}</div>
                 <Link href="/dashboard" className="btn-ghost" style={{ padding: '6px 14px', fontSize: '0.83rem', display: 'flex', alignItems: 'center', gap: 6 }}>
                   <User style={{ width: 13, height: 13 }} />Dashboard
                 </Link>
@@ -149,7 +149,7 @@ export function Navbar() {
           <div style={{ borderTop: '1px solid var(--line)', marginTop: 8, paddingTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
             {user ? (
               <>
-                {badges()}
+                <div style={{ display: 'flex', justifyContent: 'center', gap: 6 }}>{badges()}</div>
                 <Link href="/dashboard" onClick={() => setOpen(false)} className="btn-ghost" style={{ textAlign: 'center' }}>Dashboard</Link>
               </>
             ) : (
