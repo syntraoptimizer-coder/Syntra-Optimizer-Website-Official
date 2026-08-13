@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { Logo } from '@/components/site/logo'
 
 const NAV = {
-  Product:  [{ label: 'Features', href: '#features' }, { label: 'Benchmarks', href: '#benchmarks' }, { label: 'Pricing', href: '#pricing' }, { label: 'Changelog', href: '/changelog' }, { label: 'Download', href: '/checkout?plan=premium' }],
+  Product:  [{ label: 'Features', href: '#features' }, { label: 'Benchmarks', href: '#benchmarks' }, { label: 'Pricing', href: '#pricing' }, { label: 'Changelog', href: '/changelog' }, { label: 'Teams', href: '/teams' }, { label: 'Download', href: '/checkout?plan=premium' }],
+  Community: [{ label: 'Discord', href: 'https://discord.gg/syntra' }, { label: 'Teams', href: '/teams' }, { label: 'Support', href: '#' }],
   Company:  [{ label: 'About', href: '#' }, { label: 'Blog', href: '#' }, { label: 'Contact', href: '#' }],
   Legal:    [{ label: 'Privacy', href: '/privacy' }, { label: 'Terms', href: '/terms' }, { label: 'Refund Policy', href: '/refund-policy' }],
 }
@@ -20,15 +21,15 @@ export function Footer() {
   return (
     <footer style={{ borderTop: '1px solid var(--line)' }}>
       <div style={{ maxWidth: 1088, margin: '0 auto', padding: '64px 24px 40px' }}>
-        <div style={{ display: 'grid', gap: 40, gridTemplateColumns: '1.4fr 1fr 1fr 1fr' }}>
+        <div style={{ display: 'grid', gap: 40, gridTemplateColumns: '1.4fr 1fr 1fr 1fr 1fr' }}>
           <div>
             <Logo />
             <p style={{ marginTop: 14, fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--ink-3)', maxWidth: '28ch' }}>
               Optimize your PC. Instantly. Higher FPS, faster boots, cleaner Windows.
             </p>
             <div style={{ marginTop: 16, display: 'flex', gap: 8 }}>
-              {[{ label: 'Discord', Icon: DiscordIcon }, { label: 'X', Icon: XIcon }].map(({ label, Icon }) => (
-                <a key={label} href="#" aria-label={label} style={{
+              {[{ label: 'Discord', Icon: DiscordIcon, href: 'https://discord.gg/syntra' }, { label: 'X', Icon: XIcon, href: '#' }].map(({ label, Icon, href }) => (
+                <a key={label} href={href} aria-label={label} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} style={{
                   width: 32, height: 32, borderRadius: 4,
                   border: '1px solid var(--line)', display: 'grid', placeItems: 'center',
                   color: 'var(--ink-3)', textDecoration: 'none',
@@ -45,9 +46,15 @@ export function Footer() {
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {links.map(l => (
                   <li key={l.label}>
-                    <Link href={l.href} style={{ fontSize: '0.83rem', color: 'var(--ink-3)', textDecoration: 'none' }}>
-                      {l.label}
-                    </Link>
+                    {l.href.startsWith('http') ? (
+                      <a href={l.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.83rem', color: 'var(--ink-3)', textDecoration: 'none' }}>
+                        {l.label}
+                      </a>
+                    ) : (
+                      <Link href={l.href} style={{ fontSize: '0.83rem', color: 'var(--ink-3)', textDecoration: 'none' }}>
+                        {l.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

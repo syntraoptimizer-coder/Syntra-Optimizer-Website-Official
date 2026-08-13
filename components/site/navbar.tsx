@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { label: 'Benchmarks', href: '#benchmarks' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Changelog', href: '/changelog' },
+  { label: 'Teams', href: '/teams' },
   { label: 'FAQ', href: '#faq' },
 ]
 
