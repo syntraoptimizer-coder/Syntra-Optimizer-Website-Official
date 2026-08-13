@@ -5,7 +5,7 @@ import { Logo } from '@/components/site/logo'
 
 const NAV = {
   Product:  [{ label: 'Features', href: '#features' }, { label: 'Benchmarks', href: '#benchmarks' }, { label: 'Pricing', href: '#pricing' }, { label: 'Changelog', href: '/changelog' }, { label: 'Teams', href: '/teams' }, { label: 'Download', href: '/checkout?plan=premium' }],
-  Community: [{ label: 'Discord', href: 'https://discord.gg/syntra' }, { label: 'Teams', href: '/teams' }, { label: 'Support', href: '#' }],
+  Community: [{ label: 'Discord', href: '#' }, { label: 'Teams', href: '/teams' }, { label: 'Support', href: '#' }],
   Company:  [{ label: 'About', href: '#' }, { label: 'Blog', href: '#' }, { label: 'Contact', href: '#' }],
   Legal:    [{ label: 'Privacy', href: '/privacy' }, { label: 'Terms', href: '/terms' }, { label: 'Refund Policy', href: '/refund-policy' }],
 }

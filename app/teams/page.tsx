@@ -121,7 +121,7 @@ export default function TeamsPage() {
             Join our Discord server to connect with the community and start contributing today.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="https://discord.gg/syntra" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <a href="#" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
               <MessageSquare style={{ width: 16, height: 16 }} />Join Discord
             </a>
             <Link href="/checkout?plan=premium" className="btn-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
