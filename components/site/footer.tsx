@@ -174,19 +174,18 @@ export function Footer() {
           style={{
             overflow: 'hidden',
             textAlign: 'center',
-            margin: '0 -24px',
-            padding: '0 0 8px',
-            lineHeight: 0.82,
+            margin: '40px -24px 0',
+            lineHeight: 0.85,
             userSelect: 'none',
           }}
         >
           <span style={{
             fontFamily: "'Geist', 'Switzer', ui-sans-serif, sans-serif",
-            fontSize: 'clamp(72px, 18vw, 220px)',
-            fontWeight: 700,
+            fontSize: 'clamp(80px, 20vw, 260px)',
+            fontWeight: 800,
             letterSpacing: '-0.06em',
             color: 'transparent',
-            WebkitTextStroke: '1px rgba(255,255,255,0.06)',
+            WebkitTextStroke: '1.5px rgba(255,255,255,0.05)',
             display: 'block',
             whiteSpace: 'nowrap',
           }}>

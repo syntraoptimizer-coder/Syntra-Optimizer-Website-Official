@@ -198,24 +198,7 @@ export function SpanEnhance() {
       seriface.textContent = `@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');`
       document.head.appendChild(seriface)
 
-      /* Announce bar */
-      const AK = 'sn_announce_v2'
-      if (!sessionStorage.getItem(AK)) {
-        const bar = document.createElement('div')
-        bar.className = 'sn-announce'
-        bar.innerHTML = `
-          ${STAR}
-          <span>Syntra v2 is live — advanced memory tuning &amp; BIOS unlock.</span>
-          <a href="#pricing">See packages ${ARROW}</a>
-          <button class="sn-announce-x" aria-label="Close">×</button>`
-        document.body.prepend(bar)
-        document.querySelector('#main')?.classList.add('sn-bar-offset')
-        bar.querySelector('.sn-announce-x')?.addEventListener('click', () => {
-          bar.remove()
-          document.querySelector('#main')?.classList.remove('sn-bar-offset')
-          sessionStorage.setItem(AK, '1')
-        })
-      }
+      // Announce bar désactivée
 
       /* How It Works — injected after the Framer hero section */
       const heroSection = document.querySelector<HTMLElement>(
