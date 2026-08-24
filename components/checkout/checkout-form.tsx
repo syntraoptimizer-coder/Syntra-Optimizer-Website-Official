@@ -1,0 +1,184 @@
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Check, Crown, Wrench, Loader2 } from 'lucide-react'
+import { Navbar } from '@/components/site/navbar'
+
+const PLANS = {
+  premium: {
+    name: 'Syntra Optimizer Premium',
+    price: '$15',
+    tagline: 'One-time payment',
+    description: 'Full app license. Run every optimization yourself, whenever you want.',
+    icon: Crown,
+    perks: [
+      'Full Syntra Optimizer license',
+      'All modules unlocked',
+      'Unlimited optimizations',
+      'Lifetime updates',
+      'Community support',
+    ],
+  },
+  service: {
+    name: 'Syntra Optimizer Service',
+    price: '$6',
+    tagline: 'Per session',
+    description: 'A Syntra expert optimizes your PC remotely. Book as often as you\'d like — most clients check in monthly. Nothing to install on your end.',
+    icon: Wrench,
+    perks: [
+      'Personal remote optimization',
+      'No install required',
+      'Expert-tuned game settings',
+      'Live before/after score report',
+      'Priority chat support',
+    ],
+  },
+}
+
+interface CheckoutFormProps {
+  user: any
+  plan: string
+}
+
+export function CheckoutForm({ user, plan }: CheckoutFormProps) {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const selectedPlan = PLANS[plan as keyof typeof PLANS] || PLANS.premium
+  const Icon = selectedPlan.icon
+
+  const handleCheckout = async () => {
+    setLoading(true)
+    setError(null)
+
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan }),
+      })
+
+      if (!res.ok) {
+        const errorText = await res.text()
+        console.error('Checkout API error:', res.status, errorText)
+        throw new Error(errorText || 'Failed to create checkout session')
+      }
+
+      const data = await res.json()
+
+      if (!data.url) {
+        throw new Error('No checkout URL returned from server')
+      }
+
+      window.location.href = data.url
+    } catch (err: any) {
+      console.error('Checkout error:', err)
+      setError(err.message || 'Something went wrong. Please try again.')
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="flex min-h-dvh flex-col items-center justify-center px-4 py-16" style={{ background: 'var(--bg-page)' }}>
+      {/* Same top bar as the landing page */}
+      <Navbar />
+      <div aria-hidden="true" className="glow glow-blue" style={{ top: '10%', left: '50%', width: 600, height: 400, opacity: 0.35 }} />
+      <div className="relative z-10 w-full max-w-md">
+        <div className="text-center">
+          <h1
+            className="text-2xl font-light tracking-tight"
+            style={{ color: '#ffffff' }}
+          >
+            Complete Your Purchase
+          </h1>
+          <p className="mt-2 text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            Signed in as <span style={{ color: 'rgba(255,255,255,0.7)' }}>{user.email}</span>
+          </p>
+        </div>
+
+        {/* Plan card */}
+        <div
+          className="mt-8 s-card p-6"
+        >
+          <div className="flex items-center gap-4">
+            <div
+              className="grid size-11 place-items-center rounded-xl"
+              style={{
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <Icon className="size-5" style={{ color: 'rgba(255,255,255,0.8)' }} />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-base font-medium" style={{ color: 'rgba(255,255,255,0.9)' }}>
+                {selectedPlan.name}
+              </h2>
+              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.38)' }}>
+                {selectedPlan.tagline}
+              </p>
+            </div>
+            <span
+              className="font-mono text-2xl font-light"
+              style={{ color: '#ffffff' }}
+            >
+              {selectedPlan.price}
+            </span>
+          </div>
+
+          <p className="mt-4 text-sm" style={{ color: 'rgba(255,255,255,0.42)', fontWeight: 300 }}>
+            {selectedPlan.description}
+          </p>
+
+          <ul className="mt-5 space-y-2.5">
+            {selectedPlan.perks.map((perk) => (
+              <li key={perk} className="flex items-start gap-2.5 text-sm">
+                <Check className="mt-0.5 size-4 shrink-0" style={{ color: 'rgba(255,255,255,0.5)' }} />
+                <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 300 }}>{perk}</span>
+              </li>
+            ))}
+          </ul>
+
+          {error && (
+            <p
+              className="mt-4 rounded-xl px-4 py-3 text-sm"
+              style={{ background: 'rgba(255,80,80,0.1)', color: 'rgba(255,120,120,0.9)' }}
+            >
+              {error}
+            </p>
+          )}
+
+          <button
+            onClick={handleCheckout}
+            disabled={loading}
+            className="btn-primary mt-6"
+            style={{ width: '100%', height: 44 }}
+          >
+            {loading ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                Redirecting…
+              </>
+            ) : (
+              'Proceed to Payment'
+            )}
+          </button>
+
+          <p className="mt-3 text-center text-xs" style={{ color: 'rgba(255,255,255,0.28)' }}>
+            You will be redirected to Stripe to complete your payment securely.
+          </p>
+        </div>
+
+        <button
+          onClick={() => router.push('/#pricing')}
+          className="mt-5 w-full text-center text-sm transition-colors duration-200 hover:text-white"
+          style={{ color: 'rgba(255,255,255,0.35)' }}
+        >
+          ← Back to pricing
+        </button>
+      </div>
+    </div>
+  )
+}

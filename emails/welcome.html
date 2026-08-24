@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Syntra Optimizer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #080808;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      color: #ffffff;
+    }
+    .wrapper { width: 100%; background-color: #080808; padding: 40px 16px; }
+    .container { max-width: 520px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 32px; }
+    .logo-wrap { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon img { width: 36px; height: 36px; border-radius: 10px; display: block; }
+    .logo-text { font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.9); letter-spacing: -0.02em; }
+    .logo-dot { color: rgba(255,255,255,0.35); }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .card-top {
+      padding: 40px 36px 32px;
+      text-align: center;
+    }
+    .icon-wrap {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      margin: 0 auto 24px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .title {
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: -0.028em;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+    .btn {
+      display: inline-block;
+      background: rgba(255,255,255,0.92);
+      color: #080808 !important;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px 32px;
+      border-radius: 999px;
+      letter-spacing: -0.01em;
+    }
+    /* Features grid */
+    .features {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 24px 36px;
+    }
+    .features-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .feature-row {
+      display: table;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+    .feature-row:last-child { margin-bottom: 0; }
+    .feature-icon-cell {
+      display: table-cell;
+      vertical-align: middle;
+      width: 36px;
+      padding-right: 12px;
+    }
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .feature-text-cell { display: table-cell; vertical-align: middle; }
+    .feature-name {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+    }
+    .feature-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      margin-top: 2px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.22);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .footer a { color: rgba(255,255,255,0.38); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+
+      <!-- Logo -->
+      <div class="header">
+        <a href="https://www.syntraoptimizer.site" class="logo-wrap">
+          <span class="logo-icon">
+            <img src="https://www.syntraoptimizer.site/syntra-logo.png" alt="Syntra" width="36" height="36" style="display:block;border-radius:10px;" />
+          </span>
+          <span class="logo-text">Syntra<span class="logo-dot">.</span></span>
+        </a>
+      </div>
+
+      <!-- Card -->
+      <div class="card">
+        <div class="card-top">
+
+          <!-- Icon -->
+          <div class="icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+
+          <h1 class="title">Welcome to Syntra.</h1>
+          <p class="subtitle">
+            Your account is ready. You're now part of 100+ users running faster, cleaner Windows machines.
+          </p>
+
+          <a href="https://www.syntraoptimizer.site/dashboard" class="btn">Go to my dashboard</a>
+        </div>
+
+        <!-- Features -->
+        <div class="features">
+          <p class="features-title">What you can do now</p>
+
+          <div class="feature-row">
+            <div class="feature-icon-cell">
+              <div class="feature-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </div>
+            </div>
+            <div class="feature-text-cell">
+              <p class="feature-name">One-click optimization</p>
+              <p class="feature-desc">Scan and fix your PC automatically</p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="feature-icon-cell">
+              <div class="feature-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </div>
+            </div>
+            <div class="feature-text-cell">
+              <p class="feature-name">Live system score</p>
+              <p class="feature-desc">Track your PC health before and after</p>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="feature-icon-cell">
+              <div class="feature-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+            </div>
+            <div class="feature-text-cell">
+              <p class="feature-name">Done-For-You service</p>
+              <p class="feature-desc">Let an expert optimize your PC remotely</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p>You're receiving this because you created an account on Syntra Optimizer.</p>
+        <p style="margin-top:10px;">
+          © 2026 Syntra Optimizer ·
+          <a href="https://www.syntraoptimizer.site/privacy">Privacy</a> ·
+          <a href="https://www.syntraoptimizer.site/terms">Terms</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
