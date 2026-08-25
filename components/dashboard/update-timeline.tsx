@@ -1,3 +1,5 @@
+'use client'
+
 import { Bug, Package, Rocket, ShieldCheck, Wand2 } from 'lucide-react'
 
 export type UpdateItem = {
