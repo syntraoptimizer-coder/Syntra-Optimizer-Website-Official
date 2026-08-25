@@ -109,6 +109,7 @@ export default function PolitiqueCookiesPage() {
   const analytics = COOKIES.filter(c => c.category === 'Analytics')
 
   return (
+    <>
     <main className="cookie-page">
       <div className="cookie-page__aurora" aria-hidden="true" />
       <div className="cookie-page__shell">
@@ -194,5 +195,6 @@ export default function PolitiqueCookiesPage() {
       </div>
     </main>
     <Footer />
+    </>
   )
 }
