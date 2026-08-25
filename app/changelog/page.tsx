@@ -9,11 +9,19 @@ export const metadata: Metadata = {
 }
 
 export default async function ChangelogPage() {
-  const supabase = await createClient()
-  const { data: updates } = await supabase
-    .from('updates')
-    .select('id, version, title, body, category, published_at')
-    .order('published_at', { ascending: false })
+  let updates: UpdateItem[] = []
+
+  try {
+    const supabase = await createClient()
+    const { data } = await supabase
+      .from('updates')
+      .select('id, version, title, body, category, published_at')
+      .order('published_at', { ascending: false })
+
+    updates = data ?? []
+  } catch {
+    // Keep the public changelog available if Supabase is unavailable or not configured.
+  }
 
   return (
     <AppChrome crumb="changelog">
@@ -31,7 +39,7 @@ export default async function ChangelogPage() {
       </div>
 
       <div className="s-card" style={{ padding: 24 }}>
-        <UpdateTimeline updates={updates ?? []} />
+        <UpdateTimeline updates={updates} />
       </div>
     </AppChrome>
   )
