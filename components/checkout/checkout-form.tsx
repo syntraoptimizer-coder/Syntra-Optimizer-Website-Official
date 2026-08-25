@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, Crown, Wrench, Loader2 } from 'lucide-react'
+import { ArrowRight, Check, Crown, Loader2, ShieldCheck, Sparkles, Wrench } from 'lucide-react'
 import { Navbar } from '@/components/site/navbar'
 import { LaunchPrice, type PublicLaunchPricing } from '@/components/site/launch-price'
 
@@ -83,108 +83,61 @@ export function CheckoutForm({ user, plan, initialPricing }: CheckoutFormProps) 
   }
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center px-4 py-16" style={{ background: 'var(--bg-page)' }}>
-      {/* Same top bar as the landing page */}
+    <div className="checkout-page">
       <Navbar />
-      <div aria-hidden="true" className="glow glow-blue" style={{ top: '10%', left: '50%', width: 600, height: 400, opacity: 0.35 }} />
-      <div className="relative z-10 w-full max-w-md">
-        <div className="text-center">
-          <h1
-            className="text-2xl font-light tracking-tight"
-            style={{ color: '#ffffff' }}
-          >
-            Complete Your Purchase
-          </h1>
-          <p className="mt-2 text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
-            Signed in as <span style={{ color: 'rgba(255,255,255,0.7)' }}>{user.email}</span>
-          </p>
+      <div aria-hidden="true" className="checkout-page__glow checkout-page__glow--blue" />
+      <div aria-hidden="true" className="checkout-page__glow checkout-page__glow--white" />
+      <main className="checkout-page__content">
+        <div className="checkout-heading">
+          <span className="checkout-eyebrow"><Sparkles className="size-3" /> secure checkout</span>
+          <h1>Complete your purchase</h1>
+          <p>Signed in as <span>{user.email}</span></p>
         </div>
 
-        {/* Plan card */}
-        <div
-          className="mt-8 s-card p-6"
-        >
-          <div className="flex items-center gap-4">
-            <div
-              className="grid size-11 place-items-center rounded-xl"
-              style={{
-                background: 'rgba(255,255,255,0.08)',
-                border: '1px solid rgba(255,255,255,0.1)',
-              }}
-            >
-              <Icon className="size-5" style={{ color: 'rgba(255,255,255,0.8)' }} />
+        <section className="checkout-card beam-card">
+          <div className="card-texture" aria-hidden="true" />
+          <div className="checkout-card__content">
+            <div className="checkout-card__topline">
+              <span className="checkout-card__index">01 / purchase</span>
+              <span className="checkout-card__secure"><ShieldCheck className="size-3.5" /> encrypted by Stripe</span>
             </div>
-            <div className="flex-1">
-              <h2 className="text-base font-medium" style={{ color: 'rgba(255,255,255,0.9)' }}>
-                {selectedPlan.name}
-              </h2>
-              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.38)' }}>
-                {selectedPlan.tagline}
-              </p>
+
+            <div className="checkout-plan">
+              <div className="checkout-plan__identity">
+                <div className="checkout-plan__icon"><Icon className="size-5" /></div>
+                <div>
+                  <span className="checkout-plan__kicker">{plan === 'premium' ? 'Full license' : 'Expert session'}</span>
+                  <h2>{selectedPlan.name}</h2>
+                  <p>{selectedPlan.tagline}</p>
+                </div>
+              </div>
+              <div className="checkout-plan__price">
+                {plan === 'premium' ? <LaunchPrice compact initialPricing={initialPricing} /> : <span>${selectedPlan.price}</span>}
+              </div>
             </div>
-            {plan === 'premium' ? (
-              <LaunchPrice compact initialPricing={initialPricing} />
-            ) : (
-              <span
-                className="font-mono text-2xl font-light"
-                style={{ color: '#ffffff' }}
-              >
-                {selectedPlan.price}
-              </span>
-            )}
+
+            <p className="checkout-description">{selectedPlan.description}</p>
+
+            <div className="checkout-divider" />
+            <div className="checkout-benefits-heading"><span>Included with your purchase</span><span>{selectedPlan.perks.length} benefits</span></div>
+            <ul className="checkout-benefits">
+              {selectedPlan.perks.map((perk) => (
+                <li key={perk}><span className="checkout-benefit-icon"><Check className="size-3" /></span><span>{perk}</span></li>
+              ))}
+            </ul>
+
+            {error && <p className="checkout-error" role="alert">{error}</p>}
+
+            <button onClick={handleCheckout} disabled={loading} className="checkout-submit">
+              {loading ? <><Loader2 className="size-4 animate-spin" /> Redirecting…</> : <>Proceed to payment <ArrowRight className="size-4" /></>}
+            </button>
+
+            <div className="checkout-trust"><ShieldCheck className="size-4" /><span>You will be redirected to Stripe to complete your payment securely.</span></div>
           </div>
+        </section>
 
-          <p className="mt-4 text-sm" style={{ color: 'rgba(255,255,255,0.42)', fontWeight: 300 }}>
-            {selectedPlan.description}
-          </p>
-
-          <ul className="mt-5 space-y-2.5">
-            {selectedPlan.perks.map((perk) => (
-              <li key={perk} className="flex items-start gap-2.5 text-sm">
-                <Check className="mt-0.5 size-4 shrink-0" style={{ color: 'rgba(255,255,255,0.5)' }} />
-                <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 300 }}>{perk}</span>
-              </li>
-            ))}
-          </ul>
-
-          {error && (
-            <p
-              className="mt-4 rounded-xl px-4 py-3 text-sm"
-              style={{ background: 'rgba(255,80,80,0.1)', color: 'rgba(255,120,120,0.9)' }}
-            >
-              {error}
-            </p>
-          )}
-
-          <button
-            onClick={handleCheckout}
-            disabled={loading}
-            className="btn-primary mt-6"
-            style={{ width: '100%', height: 44 }}
-          >
-            {loading ? (
-              <>
-                <Loader2 className="size-4 animate-spin" />
-                Redirecting…
-              </>
-            ) : (
-              'Proceed to Payment'
-            )}
-          </button>
-
-          <p className="mt-3 text-center text-xs" style={{ color: 'rgba(255,255,255,0.28)' }}>
-            You will be redirected to Stripe to complete your payment securely.
-          </p>
-        </div>
-
-        <button
-          onClick={() => router.push('/#pricing')}
-          className="mt-5 w-full text-center text-sm transition-colors duration-200 hover:text-white"
-          style={{ color: 'rgba(255,255,255,0.35)' }}
-        >
-          ← Back to pricing
-        </button>
-      </div>
+        <button onClick={() => router.push('/#pricing')} className="checkout-back"><ArrowRight className="size-3.5 rotate-180" /> Back to pricing</button>
+      </main>
     </div>
   )
 }

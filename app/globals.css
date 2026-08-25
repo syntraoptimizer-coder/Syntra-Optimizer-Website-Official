@@ -2,6 +2,7 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import '../components/site/launch-price.css';
+@import '../components/checkout/checkout.css';
 
 @custom-variant dark (&:is(.dark *));
 
