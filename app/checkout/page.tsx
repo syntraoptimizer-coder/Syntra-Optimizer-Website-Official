@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { CheckoutForm } from '@/components/checkout/checkout-form'
+import { getLaunchPricing } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'Checkout — Syntra Optimizer',
@@ -24,11 +25,12 @@ export default async function CheckoutPage({
   }
 
   const plan = params.plan || 'premium'
+  const launchPricing = await getLaunchPricing()
 
   return (
     <div className="min-h-dvh">
       <Suspense fallback={<div className="flex items-center justify-center py-20" style={{ color: 'rgba(255,255,255,0.4)' }}>Loading...</div>}>
-        <CheckoutForm user={user} plan={plan} />
+        <CheckoutForm user={user} plan={plan} initialPricing={launchPricing} />
       </Suspense>
     </div>
   )

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { SPAN_STYLES, SPAN_BODY_PRE, SPAN_BODY_POST } from '@/app/span/span-html'
 import { PricingSlot } from '@/components/span/pricing-slot'
 import { Footer } from '@/components/site/footer'
+import { LaunchPrice, type PublicLaunchPricing } from '@/components/site/launch-price'
 
 /**
  * Renders the pixel-perfect port of the downloaded Framer "Span" template
@@ -17,7 +18,7 @@ import { Footer } from '@/components/site/footer'
  * - Elements with position:absolute and extreme top values (FAQ labels, CTA text)
  * - Logo scroller translateX transform that shifts logos out of view
  */
-export function SpanPage() {
+export function SpanPage({ initialPricing }: { initialPricing?: PublicLaunchPricing }) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -131,7 +132,8 @@ export function SpanPage() {
         }
       ` }} />
       <div dangerouslySetInnerHTML={{ __html: SPAN_BODY_PRE }} />
-      <PricingSlot />
+      <LaunchPrice hero initialPricing={initialPricing} />
+      <PricingSlot initialPricing={initialPricing} />
       <div dangerouslySetInnerHTML={{ __html: SPAN_BODY_POST }} />
       <Footer />
     </>

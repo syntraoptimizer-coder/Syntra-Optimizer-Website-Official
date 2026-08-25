@@ -1,5 +1,7 @@
-import { redirect } from 'next/navigation'
 import type { Metadata } from 'next'
+import { AppChrome } from '@/components/site/app-chrome'
+import { Pricing } from '@/components/site/pricing'
+import { getLaunchPricing } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'Pricing — Syntra Optimizer',
@@ -12,6 +14,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function PricingPage() {
-  redirect('/#pricing')
+export default async function PricingPage() {
+  const launchPricing = await getLaunchPricing()
+
+  return (
+    <AppChrome crumb="pricing">
+      <Pricing initialPricing={launchPricing} />
+    </AppChrome>
+  )
 }

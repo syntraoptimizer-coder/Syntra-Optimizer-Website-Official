@@ -1,0 +1,93 @@
+.sn-launch-price {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sn-launch-price-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sn-launch-price-old {
+  color: rgba(255, 120, 120, 0.62);
+  font-size: 0.86em;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.sn-launch-price-current {
+  color: #a4ffe2;
+  font-family: ui-monospace, monospace;
+  font-size: 1.35em;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.sn-launch-price-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 3px 8px;
+  border: 1px solid rgba(164, 255, 226, 0.35);
+  border-radius: 999px;
+  background: rgba(164, 255, 226, 0.09);
+  color: #a4ffe2;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.sn-launch-price-note {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+.sn-launch-price--compact .sn-launch-price-note {
+  display: none;
+}
+
+.sn-launch-price--card {
+  align-items: flex-start;
+}
+
+.sn-launch-price--card .sn-launch-price-current {
+  font-size: 2.8rem;
+  line-height: 1;
+}
+
+.sn-launch-price--card .sn-launch-price-old {
+  font-size: 1rem;
+}
+
+#syntra-launch-price-hero {
+  display: flex;
+  justify-content: center;
+  margin: 18px auto 0;
+  width: 100%;
+}
+
+#syntra-launch-price-hero .sn-launch-price {
+  align-items: center;
+  text-align: center;
+}
+
+#syntra-launch-price-hero .sn-launch-price-current {
+  font-size: 1.15rem;
+}
+
+#syntra-launch-price-hero .sn-launch-price-old {
+  font-size: 0.9rem;
+}
+
+#syntra-launch-price-hero .sn-launch-price-note {
+  max-width: 330px;
+}

@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { Check, Minus, Lock, Crown, ArrowRight, Clock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { LaunchPrice, type PublicLaunchPricing } from '@/components/site/launch-price'
 
 const PLANS = [
   {
@@ -71,10 +72,6 @@ function BorderBeam({ radius = 24 }: { radius?: number }) {
       ctx.clearRect(0, 0, w, h)
 
       const r = radius
-      const grad = ctx.createConicalGradient
-        ? null // native not widely available
-        : null
-
       // Path matching the card border-radius
       const path = new Path2D()
       path.moveTo(r, 0)
@@ -89,8 +86,6 @@ function BorderBeam({ radius = 24 }: { radius?: number }) {
       path.closePath()
 
       const perimeter = 2 * (w + h)
-      const beamLen = perimeter * 0.18
-
       // Compute dot position along perimeter
       const pos = ((angle % 1) * perimeter + perimeter) % perimeter
       let x = 0; let y = 0
@@ -151,7 +146,7 @@ function BorderBeam({ radius = 24 }: { radius?: number }) {
   )
 }
 
-export function Pricing() {
+export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPricing } = {}) {
   const [userRole, setUserRole] = useState<'free' | 'premium'>('free')
   const [loaded, setLoaded] = useState(false)
 
@@ -306,11 +301,15 @@ export function Pricing() {
 
                   {/* Price */}
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 8 }}>
-                    <span style={{
-                      fontSize: '2.8rem', fontWeight: 700,
-                      letterSpacing: '-0.05em', color: '#fff',
-                      fontFamily: 'ui-monospace, monospace', lineHeight: 1,
-                    }}>${plan.price}</span>
+                    {plan.name === 'Self-Service' ? (
+                      <LaunchPrice card initialPricing={initialPricing} />
+                    ) : (
+                      <span style={{
+                        fontSize: '2.8rem', fontWeight: 700,
+                        letterSpacing: '-0.05em', color: '#fff',
+                        fontFamily: 'ui-monospace, monospace', lineHeight: 1,
+                      }}>${plan.price}</span>
+                    )}
                     <span style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)', letterSpacing: '-0.02em' }}>
                       {plan.tagline}
                     </span>

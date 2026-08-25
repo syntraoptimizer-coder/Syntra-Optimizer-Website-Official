@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Check, Crown, Wrench, Loader2 } from 'lucide-react'
 import { Navbar } from '@/components/site/navbar'
+import { LaunchPrice, type PublicLaunchPricing } from '@/components/site/launch-price'
 
 const PLANS = {
   premium: {
@@ -39,9 +40,10 @@ const PLANS = {
 interface CheckoutFormProps {
   user: any
   plan: string
+  initialPricing?: PublicLaunchPricing
 }
 
-export function CheckoutForm({ user, plan }: CheckoutFormProps) {
+export function CheckoutForm({ user, plan, initialPricing }: CheckoutFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -120,12 +122,16 @@ export function CheckoutForm({ user, plan }: CheckoutFormProps) {
                 {selectedPlan.tagline}
               </p>
             </div>
-            <span
-              className="font-mono text-2xl font-light"
-              style={{ color: '#ffffff' }}
-            >
-              {selectedPlan.price}
-            </span>
+            {plan === 'premium' ? (
+              <LaunchPrice compact initialPricing={initialPricing} />
+            ) : (
+              <span
+                className="font-mono text-2xl font-light"
+                style={{ color: '#ffffff' }}
+              >
+                {selectedPlan.price}
+              </span>
+            )}
           </div>
 
           <p className="mt-4 text-sm" style={{ color: 'rgba(255,255,255,0.42)', fontWeight: 300 }}>

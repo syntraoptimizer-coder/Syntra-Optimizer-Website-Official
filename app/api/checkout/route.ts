@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createClient } from '@/lib/supabase/server'
+import { getLaunchPricing } from '@/lib/pricing'
 
 const PRICES = {
-  premium: process.env.STRIPE_PRICE_PREMIUM,
   service: process.env.STRIPE_PRICE_SERVICE,
 }
 
@@ -28,22 +28,22 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Plan is required' }, { status: 400 })
   }
 
-  const priceId = PRICES[plan as keyof typeof PRICES]
-  if (!priceId) {
+  const origin = req.headers.get('origin') || 'https://www.syntraoptimizer.site'
+  const lineItem = plan === 'premium'
+    ? await getPremiumLineItem()
+    : {
+        price: PRICES.service,
+        quantity: 1,
+      }
+
+  if (!('price' in lineItem ? lineItem.price : lineItem.price_data)) {
     console.error(`Price ID not configured for plan: ${plan}`)
     return NextResponse.json({ error: `Price not configured for plan: ${plan}` }, { status: 500 })
   }
 
-  const origin = req.headers.get('origin') || 'https://www.syntraoptimizer.site'
-
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
+    line_items: [lineItem],
     metadata: {
       user_id: user.id,
       plan,
@@ -55,4 +55,27 @@ export async function POST(req: Request) {
   })
 
   return NextResponse.json({ url: session.url })
+}
+
+async function getPremiumLineItem() {
+  const pricing = await getLaunchPricing()
+
+  if (pricing.enabled) {
+    return {
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: 'Syntra Optimizer Premium',
+          description: 'Full app license with lifetime updates.',
+        },
+        unit_amount: pricing.launchPriceCents,
+      },
+      quantity: 1,
+    }
+  }
+
+  const standardPriceId = process.env.STRIPE_PRICE_PREMIUM
+  if (!standardPriceId) return { price: undefined, quantity: 1 }
+
+  return { price: standardPriceId, quantity: 1 }
 }
