@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { SPAN_STYLES, SPAN_BODY_PRE, SPAN_BODY_POST } from '@/app/span/span-html'
 import { PricingSlot } from '@/components/span/pricing-slot'
+import { Footer } from '@/components/site/footer'
 
 /**
  * Renders the pixel-perfect port of the downloaded Framer "Span" template
@@ -132,6 +133,7 @@ export function SpanPage() {
       <div dangerouslySetInnerHTML={{ __html: SPAN_BODY_PRE }} />
       <PricingSlot />
       <div dangerouslySetInnerHTML={{ __html: SPAN_BODY_POST }} />
+      <Footer />
     </>
   )
 }

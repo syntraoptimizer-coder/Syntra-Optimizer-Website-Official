@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CookieSettingsButton } from '@/components/site/cookie-settings-button'
+import { Footer } from '@/components/site/footer'
 
 export const metadata: Metadata = {
   title: 'Cookie Policy',
@@ -192,5 +193,6 @@ export default function PolitiqueCookiesPage() {
         </footer>
       </div>
     </main>
+    <Footer />
   )
 }
