@@ -14,7 +14,7 @@ const NAV = {
   Resources: [
     { label: 'Download', href: '/checkout?plan=premium' },
     { label: 'Dashboard', href: '/dashboard' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Help Center', href: '/help' },
   ],
   Company: [
     { label: 'About', href: '#' },

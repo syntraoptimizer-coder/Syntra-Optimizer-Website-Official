@@ -3,6 +3,7 @@
 @import 'shadcn/tailwind.css';
 @import '../components/site/launch-price.css';
 @import '../components/checkout/checkout.css';
+@import './help/help.css';
 
 @custom-variant dark (&:is(.dark *));
 

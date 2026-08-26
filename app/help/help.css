@@ -1,0 +1,98 @@
+.help-page {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #0a0a0c;
+  color: #fff;
+}
+
+.help-page__glow {
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  width: min(900px, 100vw);
+  height: 520px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(40,117,255,.24), transparent 68%);
+  filter: blur(22px);
+}
+
+.help-page__shell {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 40px, 920px);
+  margin: 0 auto;
+  padding: 142px 0 84px;
+}
+
+.help-hero { max-width: 700px; margin: 0 auto 48px; text-align: center; }
+.help-hero__eyebrow, .help-contact__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6da2ff;
+  font: 500 .68rem/1 ui-monospace, monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.help-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #2875ff; box-shadow: 0 0 12px #2875ff; }
+.help-hero h1 { margin: 18px 0 12px; font-size: clamp(2.4rem, 7vw, 4.5rem); font-weight: 500; letter-spacing: -.065em; line-height: .98; }
+.help-hero > p { margin: 0 auto; color: rgba(255,255,255,.48); font-size: 1rem; letter-spacing: -.025em; }
+
+.help-search {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  margin-top: 30px;
+  padding: 0 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  background: rgba(255,255,255,.045);
+  box-shadow: inset 0 1px rgba(255,255,255,.05), 0 16px 40px -25px rgba(40,117,255,.8);
+  color: rgba(255,255,255,.42);
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.help-search:focus-within { border-color: rgba(40,117,255,.7); background: rgba(40,117,255,.08); box-shadow: 0 0 0 4px rgba(40,117,255,.1), 0 16px 40px -25px rgba(40,117,255,.9); }
+.help-search input { width: 100%; height: 54px; border: 0; outline: 0; color: #fff; background: transparent; font: 400 .88rem/1 'Switzer', sans-serif; letter-spacing: -.02em; }
+.help-search input::placeholder { color: rgba(255,255,255,.34); }
+.help-search button { width: 26px; height: 26px; border: 0; border-radius: 50%; color: rgba(255,255,255,.6); background: rgba(255,255,255,.08); cursor: pointer; font-size: 1.1rem; line-height: 1; }
+.help-results { margin: 13px 0 0; color: rgba(255,255,255,.35); font-size: .72rem; }
+.help-results strong { color: #8cb5ff; font-weight: 500; }
+
+.help-categories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.help-category { align-self: start; overflow: hidden; border: 1px solid rgba(255,255,255,.08); border-radius: 17px; background: rgba(255,255,255,.025); transition: border-color .2s, background .2s, box-shadow .2s; }
+.help-category:hover, .help-category.is-open { border-color: rgba(40,117,255,.38); background: rgba(40,117,255,.055); box-shadow: 0 16px 38px -28px rgba(40,117,255,.75); }
+.help-category__header { display: flex; width: 100%; align-items: center; gap: 13px; padding: 18px; border: 0; color: #fff; background: transparent; cursor: pointer; text-align: left; }
+.help-category__icon { display: grid; width: 40px; height: 40px; flex: none; place-items: center; border: 1px solid rgba(40,117,255,.32); border-radius: 11px; color: #6da2ff; background: rgba(40,117,255,.12); }
+.help-category__heading { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 5px; }
+.help-category__heading strong { color: rgba(255,255,255,.9); font-size: .9rem; font-weight: 500; letter-spacing: -.035em; }
+.help-category__heading small { color: rgba(255,255,255,.4); font-size: .72rem; font-weight: 300; line-height: 1.4; letter-spacing: -.015em; }
+.help-category__chevron { flex: none; color: rgba(255,255,255,.32); transition: transform .2s, color .2s; }
+.help-category.is-open .help-category__chevron { color: #6da2ff; transform: rotate(180deg); }
+.help-category__questions { padding: 0 18px 15px; }
+.help-question { border-top: 1px solid rgba(255,255,255,.07); }
+.help-question button { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 0; border: 0; color: rgba(255,255,255,.72); background: transparent; cursor: pointer; font: 400 .78rem/1.4 'Switzer', sans-serif; letter-spacing: -.02em; text-align: left; }
+.help-question button:hover { color: #fff; }
+.help-question button svg { flex: none; color: rgba(255,255,255,.32); transition: transform .2s; }
+.help-question button[aria-expanded='true'] svg { color: #6da2ff; transform: rotate(180deg); }
+.help-question p { margin: -2px 0 15px; color: rgba(255,255,255,.45); font-size: .76rem; font-weight: 300; line-height: 1.65; letter-spacing: -.015em; }
+.help-empty { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 18px; padding: 22px; border: 1px dashed rgba(255,255,255,.13); border-radius: 17px; color: rgba(255,255,255,.42); font-size: .8rem; }
+
+.help-contact { display: flex; align-items: center; gap: 17px; margin-top: 38px; padding: 24px; border: 1px solid rgba(40,117,255,.32); border-radius: 17px; background: linear-gradient(120deg, rgba(40,117,255,.16), rgba(40,117,255,.045)); box-shadow: inset 0 1px rgba(255,255,255,.07), 0 22px 50px -35px rgba(40,117,255,.8); }
+.help-contact__icon { display: grid; width: 46px; height: 46px; flex: none; place-items: center; border: 1px solid rgba(109,162,255,.4); border-radius: 13px; color: #8cb5ff; background: rgba(40,117,255,.16); }
+.help-contact__copy { min-width: 0; flex: 1; }
+.help-contact h2 { margin: 7px 0 5px; color: #fff; font-size: 1.1rem; font-weight: 500; letter-spacing: -.04em; }
+.help-contact p { margin: 0; color: rgba(255,255,255,.48); font-size: .78rem; line-height: 1.5; }
+.help-contact__button { display: inline-flex; flex: none; align-items: center; gap: 8px; padding: 11px 16px; border: 1px solid rgba(255,255,255,.18); border-radius: 11px; color: #fff; background: #2875ff; box-shadow: 0 8px 25px -10px rgba(40,117,255,.9); font-size: .78rem; font-weight: 600; text-decoration: none; transition: transform .15s, filter .15s, box-shadow .15s; }
+.help-contact__button:hover { transform: translateY(-1px); filter: brightness(1.1); box-shadow: 0 12px 30px -10px rgba(40,117,255,1); }
+
+@media (max-width: 700px) {
+  .help-page__shell { width: min(100% - 28px, 600px); padding-top: 112px; }
+  .help-hero { margin-bottom: 34px; }
+  .help-categories { grid-template-columns: 1fr; gap: 10px; }
+  .help-contact { align-items: flex-start; flex-wrap: wrap; padding: 20px; }
+  .help-contact__copy { flex-basis: calc(100% - 63px); }
+  .help-contact__button { width: 100%; justify-content: center; margin-top: 4px; }
+}

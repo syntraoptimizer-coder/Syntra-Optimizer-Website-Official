@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { label: 'Pricing', href: '#pricing' },
   { label: 'Dashboard', href: '/dashboard', new: true },
   { label: 'Teams', href: '/teams' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'FAQ', href: '/help' },
 ]
 
 const PILL_STYLE: React.CSSProperties = {
