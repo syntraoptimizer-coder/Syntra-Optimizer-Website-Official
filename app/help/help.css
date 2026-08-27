@@ -21,12 +21,12 @@
 .help-page__shell {
   position: relative;
   z-index: 1;
-  width: min(100% - 40px, 920px);
+  width: min(100% - 40px, 1080px);
   margin: 0 auto;
-  padding: 142px 0 84px;
+  padding: 142px 0 96px;
 }
 
-.help-hero { max-width: 700px; margin: 0 auto 48px; text-align: center; }
+.help-hero { max-width: 760px; margin: 0 auto 56px; text-align: center; }
 .help-hero__eyebrow, .help-contact__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -61,14 +61,16 @@
 .help-results { margin: 13px 0 0; color: rgba(255,255,255,.35); font-size: .72rem; }
 .help-results strong { color: #8cb5ff; font-weight: 500; }
 
-.help-categories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.help-category { align-self: start; overflow: hidden; border: 1px solid rgba(255,255,255,.08); border-radius: 17px; background: rgba(255,255,255,.025); transition: border-color .2s, background .2s, box-shadow .2s; }
+.help-categories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.help-category { align-self: start; min-height: 112px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); border-radius: 17px; background: rgba(255,255,255,.025); transition: border-color .2s, background .2s, box-shadow .2s, transform .2s; }
+.help-category:hover { transform: translateY(-2px); }
 .help-category:hover, .help-category.is-open { border-color: rgba(40,117,255,.38); background: rgba(40,117,255,.055); box-shadow: 0 16px 38px -28px rgba(40,117,255,.75); }
 .help-category__header { display: flex; width: 100%; align-items: center; gap: 13px; padding: 18px; border: 0; color: #fff; background: transparent; cursor: pointer; text-align: left; }
 .help-category__icon { display: grid; width: 40px; height: 40px; flex: none; place-items: center; border: 1px solid rgba(40,117,255,.32); border-radius: 11px; color: #6da2ff; background: rgba(40,117,255,.12); }
 .help-category__heading { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 5px; }
 .help-category__heading strong { color: rgba(255,255,255,.9); font-size: .9rem; font-weight: 500; letter-spacing: -.035em; }
 .help-category__heading small { color: rgba(255,255,255,.4); font-size: .72rem; font-weight: 300; line-height: 1.4; letter-spacing: -.015em; }
+.help-category__count { flex: none; color: rgba(109,162,255,.65); font: 500 .62rem/1 ui-monospace, monospace; letter-spacing: .03em; text-transform: uppercase; }
 .help-category__chevron { flex: none; color: rgba(255,255,255,.32); transition: transform .2s, color .2s; }
 .help-category.is-open .help-category__chevron { color: #6da2ff; transform: rotate(180deg); }
 .help-category__questions { padding: 0 18px 15px; }
@@ -77,7 +79,8 @@
 .help-question button:hover { color: #fff; }
 .help-question button svg { flex: none; color: rgba(255,255,255,.32); transition: transform .2s; }
 .help-question button[aria-expanded='true'] svg { color: #6da2ff; transform: rotate(180deg); }
-.help-question p { margin: -2px 0 15px; color: rgba(255,255,255,.45); font-size: .76rem; font-weight: 300; line-height: 1.65; letter-spacing: -.015em; }
+.help-question p { margin: -2px 0 15px; padding: 0 12px 0 10px; border-left: 2px solid rgba(40,117,255,.55); color: rgba(255,255,255,.52); font-size: .76rem; font-weight: 300; line-height: 1.7; letter-spacing: -.015em; }
+.help-question.is-open button { color: #fff; }
 .help-empty { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 18px; padding: 22px; border: 1px dashed rgba(255,255,255,.13); border-radius: 17px; color: rgba(255,255,255,.42); font-size: .8rem; }
 
 .help-contact { display: flex; align-items: center; gap: 17px; margin-top: 38px; padding: 24px; border: 1px solid rgba(40,117,255,.32); border-radius: 17px; background: linear-gradient(120deg, rgba(40,117,255,.16), rgba(40,117,255,.045)); box-shadow: inset 0 1px rgba(255,255,255,.07), 0 22px 50px -35px rgba(40,117,255,.8); }
@@ -92,6 +95,7 @@
   .help-page__shell { width: min(100% - 28px, 600px); padding-top: 112px; }
   .help-hero { margin-bottom: 34px; }
   .help-categories { grid-template-columns: 1fr; gap: 10px; }
+  .help-category__count { margin-left: auto; }
   .help-contact { align-items: flex-start; flex-wrap: wrap; padding: 20px; }
   .help-contact__copy { flex-basis: calc(100% - 63px); }
   .help-contact__button { width: 100%; justify-content: center; margin-top: 4px; }

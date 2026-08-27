@@ -90,7 +90,7 @@ type Question = Category['questions'][number]
 
 export default function HelpPage() {
   const [query, setQuery] = useState('')
-  const [openCategory, setOpenCategory] = useState<number | null>(null)
+  const [openCategory, setOpenCategory] = useState<string | null>(null)
   const [openQuestion, setOpenQuestion] = useState<string | null>(null)
 
   const filteredCategories = useMemo(() => {
@@ -102,8 +102,8 @@ export default function HelpPage() {
     })).filter(category => category.questions.length > 0)
   }, [query])
 
-  function toggleCategory(index: number) {
-    setOpenCategory(current => current === index ? null : index)
+  function toggleCategory(title: string) {
+    setOpenCategory(current => current === title ? null : title)
     setOpenQuestion(null)
   }
 
@@ -125,21 +125,22 @@ export default function HelpPage() {
         </header>
 
         <section className="help-categories" aria-label="Help categories">
-          {filteredCategories.map((category, index) => {
+          {filteredCategories.map(category => {
             const Icon = category.icon
-            const isOpen = openCategory === index || Boolean(query)
+            const isOpen = openCategory === category.title
             return (
               <article className={`help-category${isOpen ? ' is-open' : ''}`} key={category.title}>
-                <button className="help-category__header" onClick={() => toggleCategory(index)} aria-expanded={isOpen}>
+                <button className="help-category__header" onClick={() => toggleCategory(category.title)} aria-expanded={isOpen}>
                   <span className="help-category__icon"><Icon className="size-5" /></span>
                   <span className="help-category__heading"><strong>{category.title}</strong><small>{category.description}</small></span>
+                  <span className="help-category__count">{category.questions.length} questions</span>
                   <ChevronDown className="help-category__chevron size-5" />
                 </button>
                 {isOpen && <div className="help-category__questions">
                   {category.questions.map(([question, answer]: Question) => {
                     const questionKey = `${category.title}:${question}`
-                    const isQuestionOpen = openQuestion === questionKey || Boolean(query)
-                    return <div className="help-question" key={question}>
+                    const isQuestionOpen = openQuestion === questionKey
+                    return <div className={`help-question${isQuestionOpen ? ' is-open' : ''}`} key={question}>
                       <button onClick={() => setOpenQuestion(isQuestionOpen ? null : questionKey)} aria-expanded={isQuestionOpen}><span>{question}</span><ChevronDown className="size-4" /></button>
                       {isQuestionOpen && <p>{answer}</p>}
                     </div>
