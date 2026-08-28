@@ -98,7 +98,7 @@ export function CheckoutForm({ user, plan, initialPricing }: CheckoutFormProps) 
           <div className="checkout-card__content">
             <div className="checkout-card__summary">
               <span className="checkout-card__summary-label">Your order</span>
-              <span className="checkout-card__summary-value">One-time payment · instant access</span>
+              <span className="checkout-card__summary-value">{plan === 'premium' ? 'One-time payment' : 'Per session'} · instant access</span>
             </div>
             <div className="checkout-card__topline">
               <span className="checkout-card__index">01 / purchase</span>
