@@ -42,9 +42,9 @@ export function LoginForm() {
       setErrors({ form: error.message })
       return
     }
-    setStatus('success')
+    // The browser client persists the Supabase session in cookies/local storage.
+    // Give the server a fresh request so middleware and server components see it.
     router.push(searchParams.get('next') || '/dashboard')
-    router.refresh()
   }
 
   if (status === 'success') {
