@@ -242,9 +242,9 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
             Packages
           </p>
           <h2 style={{
-            fontFamily: "'Geist', 'Switzer', sans-serif",
+            fontFamily: "'Switzer', var(--font-inter), ui-sans-serif, system-ui, sans-serif",
             fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-            fontWeight: 600, letterSpacing: '-0.05em',
+            fontWeight: 600, letterSpacing: '-0.03em',
             lineHeight: 1.1, color: '#fff', margin: '0 0 14px',
           }}>
             Pick how deep{' '}
@@ -258,7 +258,8 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
           <p style={{
             fontSize: '0.95rem', color: 'rgba(255,255,255,0.45)',
             lineHeight: 1.65, maxWidth: '50ch', marginInline: 'auto',
-            letterSpacing: '-0.03em',
+            letterSpacing: '-0.02em',
+            fontFamily: "'Switzer', var(--font-inter), ui-sans-serif, system-ui, sans-serif",
           }}>
             One payment, one result. Do it yourself with the app, or have a Syntra specialist handle everything remotely.
           </p>
@@ -377,7 +378,8 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
                     <h3 style={{
                       fontSize: '1.05rem', fontWeight: 600,
                       color: plan.featured ? '#fff' : 'rgba(255,255,255,0.95)',
-                      letterSpacing: '-0.025em', margin: 0,
+                      letterSpacing: '-0.02em', margin: 0,
+                      fontFamily: "'Switzer', var(--font-inter), ui-sans-serif, system-ui, sans-serif",
                       textShadow: plan.featured ? '0 0 30px rgba(184,215,255,0.3)' : 'none',
                     }}>{plan.name}</h3>
                   </div>
@@ -544,22 +546,26 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
                   padding: '14px 16px', textAlign: 'left',
                   color: 'rgba(255,255,255,0.4)', fontWeight: 600,
                   letterSpacing: '-0.02em',
+                  fontFamily: "'Switzer', var(--font-inter), ui-sans-serif, system-ui, sans-serif",
                 }}>Feature</th>
                 <th style={{
                   padding: '14px 16px', textAlign: 'center',
                   color: 'rgba(255,255,255,0.35)', fontWeight: 600,
                   fontSize: '0.78rem', letterSpacing: '-0.02em',
+                  fontFamily: "'Switzer', var(--font-inter), ui-sans-serif, system-ui, sans-serif",
                 }}>Free</th>
                 <th style={{
                   padding: '14px 16px', textAlign: 'center',
                   color: 'rgba(255,255,255,0.35)', fontWeight: 600,
                   fontSize: '0.78rem', letterSpacing: '-0.02em',
+                  fontFamily: "'Switzer', var(--font-inter), ui-sans-serif, system-ui, sans-serif",
                 }}>Self-Service</th>
                 <th style={{
                   padding: '14px 16px', textAlign: 'center',
                   color: '#b8d7ff', fontWeight: 600,
                   fontSize: '0.78rem', letterSpacing: '-0.02em',
                   textShadow: '0 0 15px rgba(184,215,255,0.3)',
+                  fontFamily: "'Switzer', var(--font-inter), ui-sans-serif, system-ui, sans-serif",
                 }}>Done-For-You</th>
               </tr>
             </thead>
