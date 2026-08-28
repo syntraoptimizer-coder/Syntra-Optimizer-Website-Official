@@ -98,11 +98,11 @@ export function CheckoutForm({ user, plan, initialPricing }: CheckoutFormProps) 
           <div className="checkout-card__content">
             <div className="checkout-card__summary">
               <span className="checkout-card__summary-label">Your order</span>
-              <span className="checkout-card__summary-value">{plan === 'premium' ? 'One-time payment' : 'Per session'} · instant access</span>
+              <span className="checkout-card__secure"><ShieldCheck className="size-3.5" /> encrypted by Stripe</span>
             </div>
             <div className="checkout-card__topline">
               <span className="checkout-card__index">01 / purchase</span>
-              <span className="checkout-card__secure"><ShieldCheck className="size-3.5" /> encrypted by Stripe</span>
+              <span className="checkout-card__summary-value">{plan === 'premium' ? 'One-time payment' : 'Per session'} · instant access</span>
             </div>
 
             <div className="checkout-plan">
@@ -112,14 +112,13 @@ export function CheckoutForm({ user, plan, initialPricing }: CheckoutFormProps) 
                   <span className="checkout-plan__kicker">{plan === 'premium' ? 'Premium license' : 'Expert service'}</span>
                   <h2>{selectedPlan.name}</h2>
                   <p>{selectedPlan.tagline}</p>
+                  <p className="checkout-plan__details">{selectedPlan.description}</p>
                 </div>
               </div>
               <div className="checkout-plan__price">
                 {plan === 'premium' ? <LaunchPrice compact initialPricing={initialPricing} /> : <span>${selectedPlan.price}</span>}
               </div>
             </div>
-
-            <p className="checkout-description">{selectedPlan.description}</p>
 
             <div className="checkout-divider" />
             <div className="checkout-benefits-heading"><span>Included with your purchase</span><span>{selectedPlan.perks.length} benefits</span></div>
