@@ -8,21 +8,39 @@ import { LaunchPrice, type PublicLaunchPricing } from '@/components/site/launch-
 
 const PLANS = [
   {
+    name: 'Free',
+    price: 0,
+    tagline: 'Free forever',
+    note: 'Get started with essential game optimizations. Perfect for casual users.',
+    cta: 'Get started',
+    href: '/register',
+    featured: false,
+    requiresPremium: false,
+    badge: null,
+    perks: [
+      '15 game optimizer tweaks',
+      'Basic PC optimization',
+      'Limited optimizations per day',
+      'Community access',
+      'Standard support',
+    ],
+  },
+  {
     name: 'Self-Service',
     price: 15,
     tagline: 'One-time payment',
     note: 'Full app license. Run every optimization yourself, whenever you want.',
     cta: 'Buy license',
     href: '/checkout?plan=premium',
-    featured: false,
+    featured: true,
     requiresPremium: false,
-    badge: null,
+    badge: 'Most popular',
     perks: [
       'Full Syntra Optimizer license',
       'All 281 tweaks unlocked',
       'Unlimited optimizations',
       'Lifetime updates',
-      'Community support',
+      'Priority support',
     ],
   },
   {
@@ -32,27 +50,27 @@ const PLANS = [
     note: 'A Syntra expert optimizes your PC remotely while you watch. No install required.',
     cta: 'Book a session',
     href: '/checkout?plan=service',
-    featured: true,
+    featured: false,
     requiresPremium: true,
-    badge: 'Most booked',
+    badge: null,
     perks: [
       'Personal remote optimization',
       'No installation needed',
       'Expert-tuned game settings',
       'Live before/after score report',
-      'Priority chat support',
+      'Premium chat support',
     ],
   },
 ]
 
 const CMP = [
-  { feature: 'All optimization modules',  self: true,  dfy: true  },
-  { feature: 'Run optimizations yourself', self: true,  dfy: false },
-  { feature: 'Done by a human expert',    self: false, dfy: true  },
-  { feature: 'No installation needed',    self: false, dfy: true  },
-  { feature: 'Lifetime updates',          self: true,  dfy: false },
-  { feature: 'Priority support',          self: false, dfy: true  },
-  { feature: 'Before/after score report', self: true,  dfy: true  },
+  { feature: 'All optimization modules',  free: false, self: true,  dfy: true  },
+  { feature: 'Run optimizations yourself', free: true,  self: true,  dfy: false },
+  { feature: 'Done by a human expert',    free: false, self: false, dfy: true  },
+  { feature: 'No installation needed',    free: true,  self: false, dfy: true  },
+  { feature: 'Lifetime updates',          free: false, self: true,  dfy: false },
+  { feature: 'Priority support',          free: false, self: true,  dfy: true  },
+  { feature: 'Before/after score report', free: false, self: true,  dfy: true  },
 ]
 
 /* ── Border beam on the featured card ── */
@@ -166,8 +184,20 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
   const hasPremium = userRole === 'premium'
 
   const Cell = ({ ok }: { ok: boolean }) => ok
-    ? <Check style={{ width: 13, height: 13, color: '#b8d7ff', margin: '0 auto' }} />
-    : <Minus style={{ width: 13, height: 13, color: 'rgba(255,255,255,0.12)', margin: '0 auto' }} />
+    ? <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        width: 18, 
+        height: 18, 
+        margin: '0 auto',
+        borderRadius: '50%',
+        background: 'rgba(20,77,199,0.15)',
+        border: '1px solid rgba(184,215,255,0.25)'
+      }}>
+        <Check style={{ width: 10, height: 10, color: '#b8d7ff' }} />
+      </div>
+    : <Minus style={{ width: 11, height: 11, color: 'rgba(255,255,255,0.12)', margin: '0 auto' }} />
 
   return (
     <section id="pricing" style={{ scrollMarginTop: 80, background: '#000309' }}>
@@ -237,9 +267,9 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
         {/* ── Plan cards ── */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
-          gap: 10,
-          maxWidth: 660,
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: 16,
+          maxWidth: 900,
           marginInline: 'auto',
         }}>
           {PLANS.map(plan => {
@@ -248,17 +278,66 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
               <div
                 key={plan.name}
                 style={{
-                  background: '#0a1628',
-                  border: `1.5px solid ${plan.featured ? 'rgba(20,77,199,0.45)' : 'rgba(14,31,66,0.9)'}`,
+                  background: plan.featured 
+                    ? 'linear-gradient(145deg, rgba(42,91,255,0.18) 0%, rgba(18,42,88,0.92) 50%, rgba(7,16,35,0.96) 100%)'
+                    : 'linear-gradient(145deg, rgba(14,25,48,0.88) 0%, rgba(7,14,29,0.94) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  border: `1px solid ${plan.featured ? 'rgba(125,166,255,0.55)' : 'rgba(255,255,255,0.12)'}`,
                   borderRadius: 24,
-                  padding: '28px 24px',
+                  padding: '28px 24px 24px',
+                  minHeight: 500,
                   display: 'flex', flexDirection: 'column',
                   position: 'relative',
                   overflow: 'hidden',
-                  boxShadow: plan.featured ? '0 0 80px -20px rgba(20,77,199,0.45)' : 'none',
+                  boxShadow: plan.featured 
+                    ? '0 28px 72px -28px rgba(20,77,199,0.55), inset 0 1px 0 rgba(184,215,255,0.15), 0 0 0 1px rgba(125,166,255,0.3), 0 0 40px -15px rgba(20,77,199,0.2)'
+                    : '0 20px 56px -32px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.06)',
                   isolation: 'isolate',
+                  transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'
+                  e.currentTarget.style.boxShadow = plan.featured 
+                    ? '0 36px 96px -28px rgba(20,77,199,0.65), inset 0 1px 0 rgba(184,215,255,0.2), 0 0 0 1px rgba(125,166,255,0.4), 0 0 50px -15px rgba(20,77,199,0.3)'
+                    : '0 28px 72px -32px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.1)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = plan.featured 
+                    ? '0 28px 72px -28px rgba(20,77,199,0.55), inset 0 1px 0 rgba(184,215,255,0.15), 0 0 0 1px rgba(125,166,255,0.3), 0 0 40px -15px rgba(20,77,199,0.2)'
+                    : '0 20px 56px -32px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.06)'
                 }}
               >
+                {/* Animated background glow */}
+                {plan.featured && (
+                  <>
+                    <div style={{
+                      position: 'absolute',
+                      top: -50,
+                      right: -50,
+                      width: 200,
+                      height: 200,
+                      background: 'radial-gradient(circle, rgba(42,91,255,0.3) 0%, transparent 70%)',
+                      borderRadius: '50%',
+                      filter: 'blur(40px)',
+                      animation: 'pulse 4s ease-in-out infinite',
+                      pointerEvents: 'none',
+                    }} />
+                    <div style={{
+                      position: 'absolute',
+                      bottom: -30,
+                      left: -30,
+                      width: 150,
+                      height: 150,
+                      background: 'radial-gradient(circle, rgba(184,215,255,0.2) 0%, transparent 70%)',
+                      borderRadius: '50%',
+                      filter: 'blur(30px)',
+                      animation: 'pulse 4s ease-in-out infinite 2s',
+                      pointerEvents: 'none',
+                    }} />
+                  </>
+                )}
                 {/* Border beam on featured */}
                 {plan.featured && <BorderBeam radius={24} />}
 
@@ -270,15 +349,18 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
                     <div style={{ marginBottom: 14 }}>
                       <span style={{
                         display: 'inline-flex', alignItems: 'center', gap: 5,
-                        padding: '3px 10px',
-                        background: 'rgba(20,77,199,0.2)',
-                        border: '1px solid rgba(20,77,199,0.4)',
+                        padding: '4px 12px',
+                        background: 'linear-gradient(135deg, rgba(20,77,199,0.3), rgba(42,91,255,0.2))',
+                        border: '1px solid rgba(20,77,199,0.5)',
                         borderRadius: 40,
                         fontSize: '0.68rem', fontWeight: 600,
                         color: '#b8d7ff',
                         letterSpacing: '-0.01em',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        boxShadow: '0 0 20px -8px rgba(20,77,199,0.5)',
                       }}>
-                        <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#b8d7ff', flexShrink: 0 }} />
+                        <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#b8d7ff', flexShrink: 0, boxShadow: '0 0 8px #b8d7ff' }} />
                         {plan.badge}
                       </span>
                     </div>
@@ -286,31 +368,34 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
 
                   {/* Name band */}
                   <div style={{
-                    padding: '8px 12px',
-                    background: plan.featured ? 'rgba(20,77,199,0.15)' : 'rgba(255,255,255,0.04)',
-                    border: `1px solid ${plan.featured ? 'rgba(20,77,199,0.25)' : 'rgba(255,255,255,0.07)'}`,
-                    borderRadius: 10, marginBottom: 18,
-                    display: 'inline-block',
+                    padding: '0 0 12px',
+                    background: 'transparent',
+                    borderBottom: `1px solid ${plan.featured ? 'rgba(184,215,255,0.25)' : 'rgba(255,255,255,0.12)'}`,
+                    borderRadius: 0, marginBottom: 18,
+                    display: 'block',
                   }}>
                     <h3 style={{
-                      fontSize: '0.85rem', fontWeight: 600,
-                      color: plan.featured ? '#b8d7ff' : 'rgba(255,255,255,0.8)',
-                      letterSpacing: '-0.03em', margin: 0,
+                      fontSize: '1.05rem', fontWeight: 600,
+                      color: plan.featured ? '#fff' : 'rgba(255,255,255,0.95)',
+                      letterSpacing: '-0.025em', margin: 0,
+                      textShadow: plan.featured ? '0 0 30px rgba(184,215,255,0.3)' : 'none',
                     }}>{plan.name}</h3>
                   </div>
 
                   {/* Price */}
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 8 }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 10 }}>
                     {plan.name === 'Self-Service' ? (
                       <LaunchPrice card initialPricing={initialPricing} />
                     ) : (
                       <span style={{
-                        fontSize: '2.8rem', fontWeight: 700,
+                        fontSize: plan.price === 0 ? '2.8rem' : '3.2rem',
+                        fontWeight: 700,
                         letterSpacing: '-0.05em', color: '#fff',
                         fontFamily: 'ui-monospace, monospace', lineHeight: 1,
-                      }}>${plan.price}</span>
+                        textShadow: plan.featured ? '0 0 40px rgba(184,215,255,0.4)' : 'none',
+                      }}>{plan.price === 0 ? 'Free' : `$${plan.price}`}</span>
                     )}
-                    <span style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)', letterSpacing: '-0.02em' }}>
+                    <span style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '-0.02em' }}>
                       {plan.tagline}
                     </span>
                   </div>
@@ -319,15 +404,15 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
                   <p style={{
                     display: 'flex', alignItems: 'center', gap: 5,
                     fontSize: '0.75rem', color: 'rgba(255,255,255,0.35)',
-                    marginBottom: 16, letterSpacing: '-0.02em',
+                    marginBottom: 20, letterSpacing: '-0.02em',
                   }}>
                     <Clock style={{ width: 11, height: 11, flexShrink: 0 }} />
                     {plan.featured ? '1 to 2 days' : 'Instant access'}
                   </p>
 
                   <p style={{
-                    fontSize: '0.84rem', color: 'rgba(255,255,255,0.45)',
-                    lineHeight: 1.6, marginBottom: 22, letterSpacing: '-0.02em',
+                    fontSize: '0.86rem', color: 'rgba(255,255,255,0.55)',
+                    lineHeight: 1.65, marginBottom: 28, letterSpacing: '-0.02em',
                   }}>{plan.note}</p>
 
                   {/* CTA */}
@@ -362,15 +447,37 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
                       href={plan.href}
                       style={{
                         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
-                        padding: '12px 20px', borderRadius: 12,
-                        background: plan.featured ? '#ffffff' : 'rgba(255,255,255,0.06)',
-                        border: plan.featured ? 'none' : '1px solid rgba(255,255,255,0.1)',
-                        color: plan.featured ? '#000309' : 'rgba(255,255,255,0.8)',
+                        padding: '14px 20px', borderRadius: 14,
+                        background: plan.featured 
+                          ? 'linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%)'
+                          : 'rgba(255,255,255,0.08)',
+                        border: plan.featured ? 'none' : '1px solid rgba(255,255,255,0.15)',
+                        color: plan.featured ? '#000309' : 'rgba(255,255,255,0.9)',
                         fontSize: '0.88rem', fontWeight: 600,
                         textDecoration: 'none', letterSpacing: '-0.02em',
-                        boxShadow: plan.featured ? 'rgba(255,255,255,0.9) 0px 1px 0px inset, 0 4px 20px -4px rgba(255,255,255,0.3)' : 'none',
-                        transition: 'transform .15s, filter .15s',
+                        boxShadow: plan.featured 
+                          ? 'rgba(255,255,255,0.9) 0px 1px 0px inset, 0 4px 20px -4px rgba(255,255,255,0.4), 0 0 30px -10px rgba(184,215,255,0.3)'
+                          : '0 4px 15px -4px rgba(0,0,0,0.3)',
+                        transition: 'transform .2s, filter .2s, box-shadow .2s',
                         marginBottom: 22,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)'
+                        e.currentTarget.style.filter = 'brightness(1.05)'
+                        if (plan.featured) {
+                          e.currentTarget.style.boxShadow = 'rgba(255,255,255,0.9) 0px 1px 0px inset, 0 8px 30px -4px rgba(255,255,255,0.5), 0 0 40px -10px rgba(184,215,255,0.4)'
+                        } else {
+                          e.currentTarget.style.boxShadow = '0 8px 25px -4px rgba(0,0,0,0.4)'
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)'
+                        e.currentTarget.style.filter = 'brightness(1)'
+                        if (plan.featured) {
+                          e.currentTarget.style.boxShadow = 'rgba(255,255,255,0.9) 0px 1px 0px inset, 0 4px 20px -4px rgba(255,255,255,0.4), 0 0 30px -10px rgba(184,215,255,0.3)'
+                        } else {
+                          e.currentTarget.style.boxShadow = '0 4px 15px -4px rgba(0,0,0,0.3)'
+                        }
                       }}
                     >
                       {plan.cta}
@@ -381,22 +488,35 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
                   {/* Perks */}
                   <p style={{
                     fontSize: '0.72rem', fontWeight: 500,
-                    color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em',
-                    textTransform: 'uppercase', marginBottom: 12,
+                    color: 'rgba(255,255,255,0.35)', letterSpacing: '0.04em',
+                    textTransform: 'uppercase', marginBottom: 14, paddingTop: 20, borderTop: `1px solid ${plan.featured ? 'rgba(184,215,255,0.15)' : 'rgba(255,255,255,0.08)'}`,
                   }}>
                     {plan.featured ? 'Everything in Self-Service, plus' : 'Features'}
                   </p>
                   <ul style={{
                     listStyle: 'none', padding: 0, margin: 0,
-                    display: 'flex', flexDirection: 'column', gap: 9, flex: 1,
+                    display: 'flex', flexDirection: 'column', gap: 11, flex: 1,
                   }}>
-                    {plan.perks.map(p => (
+                    {plan.perks.map((p, index) => (
                       <li key={p} style={{
-                        display: 'flex', gap: 8,
-                        fontSize: '0.84rem', color: 'rgba(255,255,255,0.5)',
+                        display: 'flex', gap: 10,
+                        fontSize: '0.85rem', color: 'rgba(255,255,255,0.65)',
                         letterSpacing: '-0.02em',
+                        alignItems: 'flex-start',
+                        transition: 'color 0.2s ease, transform 0.2s ease',
+                        opacity: 0,
+                        animation: `fade-in-up 0.4s ease forwards ${index * 0.05}s`,
                       }}>
-                        <Check style={{ width: 13, height: 13, flexShrink: 0, marginTop: 2, color: '#b8d7ff' }} />
+                        <div style={{
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          width: 18, height: 18, flexShrink: 0, marginTop: 1,
+                          borderRadius: '50%',
+                          background: plan.featured ? 'rgba(42,91,255,0.25)' : 'rgba(20,77,199,0.15)',
+                          border: `1px solid ${plan.featured ? 'rgba(42,91,255,0.45)' : 'rgba(20,77,199,0.3)'}`,
+                          transition: 'background 0.2s ease, border-color 0.2s ease',
+                        }}>
+                          <Check style={{ width: 10, height: 10, color: plan.featured ? '#b8d7ff' : '#8fb0ff' }} />
+                        </div>
                         {p}
                       </li>
                     ))}
@@ -410,27 +530,36 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
         {/* ── Comparison table ── */}
         <div style={{
           maxWidth: 660, margin: '20px auto 0',
-          border: '1px solid rgba(255,255,255,0.06)',
+          border: '1px solid rgba(255,255,255,0.1)',
           borderRadius: 16, overflow: 'hidden',
-          background: 'rgba(255,255,255,0.015)',
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          boxShadow: '0 8px 32px -8px rgba(0,0,0,0.3)',
         }}>
           <table style={{ width: '100%', fontSize: '0.82rem', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', background: 'rgba(20,77,199,0.08)' }}>
                 <th style={{
-                  padding: '12px 16px', textAlign: 'left',
-                  color: 'rgba(255,255,255,0.35)', fontWeight: 500,
+                  padding: '14px 16px', textAlign: 'left',
+                  color: 'rgba(255,255,255,0.4)', fontWeight: 600,
                   letterSpacing: '-0.02em',
                 }}>Feature</th>
                 <th style={{
-                  padding: '12px 16px', textAlign: 'center',
-                  color: 'rgba(255,255,255,0.3)', fontWeight: 500,
+                  padding: '14px 16px', textAlign: 'center',
+                  color: 'rgba(255,255,255,0.35)', fontWeight: 600,
+                  fontSize: '0.78rem', letterSpacing: '-0.02em',
+                }}>Free</th>
+                <th style={{
+                  padding: '14px 16px', textAlign: 'center',
+                  color: 'rgba(255,255,255,0.35)', fontWeight: 600,
                   fontSize: '0.78rem', letterSpacing: '-0.02em',
                 }}>Self-Service</th>
                 <th style={{
-                  padding: '12px 16px', textAlign: 'center',
-                  color: '#b8d7ff', fontWeight: 500,
+                  padding: '14px 16px', textAlign: 'center',
+                  color: '#b8d7ff', fontWeight: 600,
                   fontSize: '0.78rem', letterSpacing: '-0.02em',
+                  textShadow: '0 0 15px rgba(184,215,255,0.3)',
                 }}>Done-For-You</th>
               </tr>
             </thead>
@@ -439,14 +568,22 @@ export function Pricing({ initialPricing }: { initialPricing?: PublicLaunchPrici
                 <tr
                   key={r.feature}
                   style={{
-                    borderBottom: i < CMP.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                    borderBottom: i < CMP.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
+                    transition: 'background 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(20,77,199,0.05)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
                   }}
                 >
-                  <td style={{ padding: '9px 16px', color: 'rgba(255,255,255,0.4)', letterSpacing: '-0.02em' }}>
+                  <td style={{ padding: '12px 16px', color: 'rgba(255,255,255,0.5)', letterSpacing: '-0.02em' }}>
                     {r.feature}
                   </td>
-                  <td style={{ padding: '9px 16px', textAlign: 'center' }}><Cell ok={r.self} /></td>
-                  <td style={{ padding: '9px 16px', textAlign: 'center' }}><Cell ok={r.dfy} /></td>
+                  <td style={{ padding: '12px 16px', textAlign: 'center' }}><Cell ok={r.free} /></td>
+                  <td style={{ padding: '12px 16px', textAlign: 'center' }}><Cell ok={r.self} /></td>
+                  <td style={{ padding: '12px 16px', textAlign: 'center' }}><Cell ok={r.dfy} /></td>
                 </tr>
               ))}
             </tbody>

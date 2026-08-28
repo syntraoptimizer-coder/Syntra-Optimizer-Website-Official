@@ -8,21 +8,21 @@ import { LaunchPrice, type PublicLaunchPricing } from '@/components/site/launch-
 
 const PLANS = {
   premium: {
-    name: 'Syntra Optimizer Premium',
+    name: 'Self-Service License',
     price: '$15',
     tagline: 'One-time payment',
     description: 'Full app license. Run every optimization yourself, whenever you want.',
     icon: Crown,
     perks: [
       'Full Syntra Optimizer license',
-      'All modules unlocked',
+      'All 281 tweaks unlocked',
       'Unlimited optimizations',
       'Lifetime updates',
-      'Community support',
+      'Priority support',
     ],
   },
   service: {
-    name: 'Syntra Optimizer Service',
+    name: 'Done-For-You Service',
     price: '$6',
     tagline: 'Per session',
     description: 'A Syntra expert optimizes your PC remotely. Book as often as you\'d like — most clients check in monthly. Nothing to install on your end.',
@@ -32,7 +32,7 @@ const PLANS = {
       'No install required',
       'Expert-tuned game settings',
       'Live before/after score report',
-      'Priority chat support',
+      'Premium chat support',
     ],
   },
 }
@@ -94,9 +94,12 @@ export function CheckoutForm({ user, plan, initialPricing }: CheckoutFormProps) 
           <p>Signed in as <span>{user.email}</span></p>
         </div>
 
-        <section className="checkout-card beam-card">
-          <div className="card-texture" aria-hidden="true" />
+        <section className="checkout-card">
           <div className="checkout-card__content">
+            <div className="checkout-card__summary">
+              <span className="checkout-card__summary-label">Your order</span>
+              <span className="checkout-card__summary-value">One-time payment · instant access</span>
+            </div>
             <div className="checkout-card__topline">
               <span className="checkout-card__index">01 / purchase</span>
               <span className="checkout-card__secure"><ShieldCheck className="size-3.5" /> encrypted by Stripe</span>
@@ -106,7 +109,7 @@ export function CheckoutForm({ user, plan, initialPricing }: CheckoutFormProps) 
               <div className="checkout-plan__identity">
                 <div className="checkout-plan__icon"><Icon className="size-5" /></div>
                 <div>
-                  <span className="checkout-plan__kicker">{plan === 'premium' ? 'Full license' : 'Expert session'}</span>
+                  <span className="checkout-plan__kicker">{plan === 'premium' ? 'Premium license' : 'Expert service'}</span>
                   <h2>{selectedPlan.name}</h2>
                   <p>{selectedPlan.tagline}</p>
                 </div>
@@ -128,8 +131,13 @@ export function CheckoutForm({ user, plan, initialPricing }: CheckoutFormProps) 
 
             {error && <p className="checkout-error" role="alert">{error}</p>}
 
+            <div className="checkout-total">
+              <span>Total today</span>
+              <strong>{plan === 'premium' ? <LaunchPrice compact initialPricing={initialPricing} /> : selectedPlan.price}</strong>
+            </div>
+
             <button onClick={handleCheckout} disabled={loading} className="checkout-submit">
-              {loading ? <><Loader2 className="size-4 animate-spin" /> Redirecting…</> : <>Proceed to payment <ArrowRight className="size-4" /></>}
+              {loading ? <><Loader2 className="size-4 animate-spin" /> Redirecting…</> : <>Proceed to secure payment <ArrowRight className="size-4" /></>}
             </button>
 
             <div className="checkout-trust"><ShieldCheck className="size-4" /><span>You will be redirected to Stripe to complete your payment securely.</span></div>

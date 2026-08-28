@@ -38,9 +38,17 @@ export default async function ChangelogPage() {
         </p>
       </div>
 
-      <div className="s-card" style={{ padding: 24 }}>
-        <UpdateTimeline updates={updates} />
-      </div>
+      {updates.length > 0 ? (
+        <div className="s-card" style={{ padding: 24 }}>
+          <UpdateTimeline updates={updates} />
+        </div>
+      ) : (
+        <div style={{ maxWidth: 620, padding: '18px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+          <p style={{ margin: 0, color: 'var(--ink-2)', fontSize: '0.88rem', lineHeight: 1.6 }}>
+            No releases have been published yet. New improvements will appear here as soon as they are ready.
+          </p>
+        </div>
+      )}
     </AppChrome>
   )
 }

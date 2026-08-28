@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { SPAN_STYLES, SPAN_BODY_PRE, SPAN_BODY_POST } from '@/app/span/span-html'
 import { PricingSlot } from '@/components/span/pricing-slot'
 import { Footer } from '@/components/site/footer'
-import { LaunchPrice, type PublicLaunchPricing } from '@/components/site/launch-price'
+import type { PublicLaunchPricing } from '@/components/site/launch-price'
 
 /**
  * Renders the pixel-perfect port of the downloaded Framer "Span" template
@@ -25,7 +25,9 @@ export function SpanPage({ initialPricing }: { initialPricing?: PublicLaunchPric
     setMounted(true)
   }, [])
 
-  if (!mounted) return null
+  if (!mounted) {
+    return <div aria-hidden="true" style={{ minHeight: '100dvh', background: 'var(--bg-page)' }} />
+  }
 
   return (
     <>
@@ -132,10 +134,10 @@ export function SpanPage({ initialPricing }: { initialPricing?: PublicLaunchPric
         }
       ` }} />
       <div dangerouslySetInnerHTML={{ __html: SPAN_BODY_PRE }} />
-      <LaunchPrice hero initialPricing={initialPricing} />
       <PricingSlot initialPricing={initialPricing} />
       <div dangerouslySetInnerHTML={{ __html: SPAN_BODY_POST }} />
       <Footer />
+      <style>{`\n        @media (max-width: 809.98px) {\n          [data-layout-template="true"] { overflow-x: hidden; }\n          .sn-flow-grid { grid-template-columns: minmax(0, 1fr) !important; }\n          .sn-vc-card { width: min(318px, calc(100vw - 48px)) !important; }\n        }\n        @media (prefers-reduced-motion: reduce) {\n          *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }\n        }\n      `}</style>
     </>
   )
 }

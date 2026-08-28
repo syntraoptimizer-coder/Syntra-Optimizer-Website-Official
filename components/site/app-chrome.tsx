@@ -19,11 +19,11 @@ export function AppChrome({
       <Navbar />
 
       <main style={{ position: 'relative', zIndex: 10, maxWidth: 1040, margin: '0 auto', padding: '104px 20px 80px' }}>
-        {actions && (
+        {actions ? (
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 20 }}>
             {actions}
           </div>
-        )}
+        ) : null}
         {children}
       </main>
     </div>

@@ -61,16 +61,20 @@ export function DashboardTabs({ user, name, email, role, serviceCount, initials,
 
   return (
     <div>
-      <TabBar tabs={TABS} activeTab={tab} onChange={id => setTab(id as typeof tab)} style={{ marginBottom: 28 }} />
+      <div style={{ marginBottom: 28 }}>
+        <TabBar tabs={TABS} activeTab={tab} onChange={id => setTab(id as typeof tab)} />
+      </div>
 
       {/* ── OVERVIEW ── */}
       {tab === 'overview' && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 12, alignItems: 'start' }}>
 
           {/* Left — Updates */}
-          <SCard title="Syntra Optimizer Updates" icon={PackageCheck}>
-            <UpdateTimeline updates={updates} />
-          </SCard>
+          {updates.length > 0 && (
+            <SCard title="Syntra Optimizer Updates" icon={PackageCheck}>
+              <UpdateTimeline updates={updates} />
+            </SCard>
+          )}
 
           {/* Right sidebar */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
