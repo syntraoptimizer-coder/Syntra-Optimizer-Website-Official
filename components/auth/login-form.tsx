@@ -42,9 +42,10 @@ export function LoginForm() {
       setErrors({ form: error.message })
       return
     }
-    // The browser client persists the Supabase session in cookies/local storage.
-    // Give the server a fresh request so middleware and server components see it.
-    router.push(searchParams.get('next') || '/dashboard')
+    const nextPath = searchParams.get('next')
+    const destination = nextPath?.startsWith('/') ? nextPath : '/dashboard'
+    // A full navigation sends the freshly persisted auth cookies to Vercel.
+    window.location.assign(destination)
   }
 
   if (status === 'success') {

@@ -28,22 +28,11 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const isDashboard = request.nextUrl.pathname.startsWith('/dashboard')
-  const isLogin = request.nextUrl.pathname === '/login'
 
   if (isDashboard && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('next', request.nextUrl.pathname)
-    return NextResponse.redirect(url)
-  }
-
-  // Do not redirect authenticated users away from /login. The client-side login
-  // flow needs to complete its navigation without a middleware redirect loop.
-  if (isLogin && user) {
-    const next = request.nextUrl.searchParams.get('next')
-    const url = request.nextUrl.clone()
-    url.pathname = next?.startsWith('/') ? next : '/dashboard'
-    url.search = ''
     return NextResponse.redirect(url)
   }
 
