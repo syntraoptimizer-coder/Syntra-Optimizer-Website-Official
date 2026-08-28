@@ -263,7 +263,7 @@ export function SpanEnhance() {
       }
 
       /* Games marquee */
-      const hiwEl = document.getElementById('how-it-works')
+      const hiwEl = document.getElementById('how-it-works') || document.getElementById('sn-hiw')
       if (hiwEl && !document.getElementById('sn-games')) {
         const logos = [...GAME_LOGOS, ...GAME_LOGOS]
           .map(g => `<img class="sn-game-logo" src="${g.src}" alt="${g.alt}" height="40" loading="lazy" decoding="async">`)
