@@ -173,6 +173,7 @@ must('Route every signal to the right action — instantly. Measure outcomes aga
 // ── How it Works ──
 must('How it Works', 'How it works')
 must('From business logic to deployed AI in days.', 'From install to optimized in minutes.')
+must('One platform. Three compounding outcomes.', '281 reversible tweaks. Built for better performance.')
 must('Connect business logic', 'Scan your system')
 must('Sync your CRM, docs, and tools. Relay ingests entities, policies, and playbooks.',
   'Syntra analyzes your Windows install — startup items, services, network stack, and memory — and builds a health report.')
