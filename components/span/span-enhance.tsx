@@ -104,9 +104,9 @@ const CSS = `
 .sn-flow-step i{width:1px;height:10px;background:rgba(184,215,255,.25);}
 .sn-flow-h3{margin:0 0 8px;font-family:'Geist','Switzer',sans-serif;font-size:1.05rem;font-weight:600;color:#fff;letter-spacing:-.04em;line-height:1.25;}
 .sn-flow-p{margin:0;font-size:.85rem;line-height:1.65;color:rgba(255,255,255,.45);letter-spacing:-.02em;}
-.sn-hiw-cta{text-align:center;margin-top:40px;}
-.sn-hiw-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:#fff;color:#000309;border-radius:13px;font-family:'Switzer','Geist',sans-serif;font-size:15px;font-weight:600;letter-spacing:-.04em;text-decoration:none;transition:transform .15s,filter .15s;}
-.sn-hiw-btn:hover{transform:translateY(-1px);filter:brightness(1.04);}
+.sn-hiw-cta{text-align:center;margin-top:40px;padding:18px 0;}
+.sn-hiw-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,#144dc7,#3b82f6);color:#fff;border-radius:13px;font-family:'Switzer','Geist',sans-serif;font-size:15px;font-weight:600;letter-spacing:-.04em;text-decoration:none;box-shadow:0 8px 24px -8px rgba(20,77,199,.65);transition:transform .15s,filter .15s;}
+.sn-hiw-btn:hover{transform:translateY(-2px);filter:brightness(1.1);}
 
 .sn-games{width:100%;padding:72px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);overflow:hidden;}
 .sn-games-head{text-align:center;margin-bottom:44px;padding:0 24px;}
