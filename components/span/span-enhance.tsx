@@ -117,8 +117,8 @@ const CSS = `
 @keyframes sn-mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .sn-mq-track{display:flex;width:max-content;align-items:center;gap:48px;padding:16px 24px;animation:sn-mq 32s linear infinite;will-change:transform;}
 .sn-mq-track:hover{animation-play-state:paused;}
-.sn-game-logo{height:40px;width:auto;object-fit:contain;flex-shrink:0;opacity:.68;filter:brightness(0) invert(1);transition:opacity .2s;}
-.sn-game-logo:hover{opacity:1;}
+.sn-game-logo{display:block;height:180px;width:320px;object-fit:cover;flex-shrink:0;opacity:.9;border-radius:12px;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.28);transition:opacity .2s,transform .2s,border-color .2s;}
+.sn-game-logo:hover{opacity:1;transform:translateY(-3px);border-color:rgba(184,215,255,.35);}
 
 .sn-vouches{border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);overflow:hidden;}
 .sn-vouches-head{max-width:1100px;margin:0 auto;padding:96px 24px 48px;text-align:center;}
@@ -266,7 +266,7 @@ export function SpanEnhance() {
       const hiwEl = document.getElementById('how-it-works') || document.getElementById('sn-hiw')
       if (hiwEl && !document.getElementById('sn-games')) {
         const logos = [...GAME_LOGOS, ...GAME_LOGOS]
-          .map(g => `<img class="sn-game-logo" src="${g.src}" alt="${g.alt}" height="40" loading="lazy" decoding="async">`)
+          .map(g => `<img class="sn-game-logo" src="${g.src}" alt="${g.alt}" width="320" height="180" loading="lazy" decoding="async">`)
           .join('')
         const games = document.createElement('section')
         games.id = 'sn-games'
