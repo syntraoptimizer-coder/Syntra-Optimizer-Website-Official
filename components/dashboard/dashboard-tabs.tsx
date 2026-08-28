@@ -132,12 +132,24 @@ export function DashboardTabs({ user, name, email, role, serviceCount, initials,
                 </div>
               ) : (
                 <div>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--ink-2)', lineHeight: 1.55, marginBottom: 14 }}>
-                    Purchase a license to download Syntra Optimizer.
-                  </p>
-                  <Link href="/checkout?plan=premium" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}>
-                    <Crown style={{ width: 13, height: 13 }} />Get Premium
-                  </Link>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                    <div>
+                      <p style={{ fontSize: '0.83rem', fontWeight: 600, color: 'var(--ink-0)', marginBottom: 3 }}>v1.1.1 (Free)</p>
+                      <p style={{ fontSize: '0.72rem', color: 'var(--ink-3)' }}>Windows 10/11 · 105 MB</p>
+                    </div>
+                    <span className="s-tag" style={{ fontSize: '0.6rem', color: 'var(--ink-3)' }}>Free</span>
+                  </div>
+                  <a href="https://release-assets.githubusercontent.com/github-production-release-asset/1349544478/b5853f38-9f77-46df-88f4-7fe84e201ba5?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-08-28T13%3A18%3A52Z&rscd=attachment%3B+filename%3DSyntra-Optimizer-Setup-1.1.1.exe&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-08-28T12%3A17%3A58Z&ske=2026-08-28T13%3A18%3A52Z&sks=b&skv=2018-11-09&sig=TsqaFbljyqaTP58g6rx5M43C6j9ZTSu0Fp6IotYFJdo%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.bww-afs8bmtsWdL5hnG8ahV8f773ri4X8vDDdwcaBVk&response-content-disposition=attachment%3B%20filename%3DSyntra-Optimizer-Setup-1.1.1.exe&response-content-type=application%2Foctet-stream" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, width: '100%' }}>
+                    <Download style={{ width: 13, height: 13 }} />Download Free
+                  </a>
+                  <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--line)' }}>
+                    <p style={{ fontSize: '0.78rem', color: 'var(--ink-2)', lineHeight: 1.5, marginBottom: 10 }}>
+                      Upgrade to Premium for full access to all features.
+                    </p>
+                    <Link href="/checkout?plan=premium" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, width: '100%', fontSize: '0.78rem' }}>
+                      <Crown style={{ width: 12, height: 12 }} />Get Premium — $15
+                    </Link>
+                  </div>
                 </div>
               )}
             </SCard>
@@ -163,25 +175,35 @@ export function DashboardTabs({ user, name, email, role, serviceCount, initials,
       {tab === 'downloads' && (
         <div style={{ maxWidth: 600 }}>
           <SCard title="Syntra Optimizer" icon={Download}>
-            {!hasPremium ? (
-              <div style={{ textAlign: 'center', padding: '32px 0' }}>
-                <div style={{ width: 48, height: 48, borderRadius: 8, background: 'var(--bg-2)', border: '1px solid var(--line)', display: 'grid', placeItems: 'center', margin: '0 auto 16px', color: 'var(--ink-2)' }}>
-                  <Download style={{ width: 20, height: 20 }} />
+            {/* Free version */}
+            <div style={{ padding: '16px 0', borderBottom: '1px solid var(--line)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)' }}>Syntra Optimizer (Free)</span>
+                    <span className="s-tag" style={{ fontSize: '0.6rem', color: 'var(--ink-3)' }}>Free</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: 14, fontSize: '0.75rem', color: 'var(--ink-3)' }}>
+                    <span>v1.1.1</span>
+                    <span>·</span>
+                    <span>Windows 10 / 11</span>
+                    <span>·</span>
+                    <span>105 MB</span>
+                  </div>
                 </div>
-                <p style={{ fontSize: '0.875rem', color: 'var(--ink-2)', marginBottom: 20, maxWidth: '30ch', marginInline: 'auto', lineHeight: 1.55 }}>
-                  Purchase a Self-Service license to download Syntra Optimizer.
-                </p>
-                <Link href="/checkout?plan=premium" className="btn-primary" style={{ display: 'inline-flex', gap: 7 }}>
-                  <Crown style={{ width: 13, height: 13 }} />Get Premium — $15
-                </Link>
+                <a href="https://release-assets.githubusercontent.com/github-production-release-asset/1349544478/b5853f38-9f77-46df-88f4-7fe84e201ba5?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-08-28T13%3A18%3A52Z&rscd=attachment%3B+filename%3DSyntra-Optimizer-Setup-1.1.1.exe&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-08-28T12%3A17%3A58Z&ske=2026-08-28T13%3A18%3A52Z&sks=b&skv=2018-11-09&sig=TsqaFbljyqaTP58g6rx5M43C6j9ZTSu0Fp6IotYFJdo%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.bww-afs8bmtsWdL5hnG8ahV8f773ri4X8vDDdwcaBVk&response-content-disposition=attachment%3B%20filename%3DSyntra-Optimizer-Setup-1.1.1.exe&response-content-type=application%2Foctet-stream" className="btn-primary" style={{ display: 'inline-flex', gap: 7, whiteSpace: 'nowrap' }}>
+                  <Download style={{ width: 13, height: 13 }} />Download
+                </a>
               </div>
-            ) : (
-              <div>
-                {/* Release row */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', padding: '16px 0', borderBottom: '1px solid var(--line)' }}>
+            </div>
+
+            {/* Premium version */}
+            {hasPremium ? (
+              <div style={{ padding: '16px 0' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center' }}>
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)' }}>Syntra Optimizer Setup</span>
+                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ink-0)' }}>Syntra Optimizer (Premium)</span>
                       <span className="s-tag" style={{ fontSize: '0.6rem', color: 'var(--ink-1)' }}>Latest</span>
                     </div>
                     <div style={{ display: 'flex', gap: 14, fontSize: '0.75rem', color: 'var(--ink-3)' }}>
@@ -197,8 +219,17 @@ export function DashboardTabs({ user, name, email, role, serviceCount, initials,
                   </a>
                 </div>
                 <p style={{ marginTop: 14, fontSize: '0.75rem', color: 'var(--ink-3)', lineHeight: 1.55 }}>
-                  Your download is secured and tied to your account. Do not share the link.
+                  Your premium download is secured and tied to your account. Do not share the link.
                 </p>
+              </div>
+            ) : (
+              <div style={{ padding: '16px 0', textAlign: 'center' }}>
+                <p style={{ fontSize: '0.875rem', color: 'var(--ink-2)', marginBottom: 16, lineHeight: 1.55 }}>
+                  Purchase a Self-Service license to unlock the premium version with all features.
+                </p>
+                <Link href="/checkout?plan=premium" className="btn-primary" style={{ display: 'inline-flex', gap: 7 }}>
+                  <Crown style={{ width: 13, height: 13 }} />Get Premium — $15
+                </Link>
               </div>
             )}
           </SCard>
