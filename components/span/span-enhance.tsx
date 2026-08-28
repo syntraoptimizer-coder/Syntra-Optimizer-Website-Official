@@ -120,7 +120,7 @@ const CSS = `
 .sn-game-logo{display:block;height:180px;width:320px;object-fit:cover;flex-shrink:0;opacity:.9;border-radius:12px;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.28);transition:opacity .2s,transform .2s,border-color .2s;}
 .sn-game-logo:hover{opacity:1;transform:translateY(-3px);border-color:rgba(184,215,255,.35);}
 
-.sn-vouches{border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);overflow:hidden;}
+.sn-vouches{display:none!important;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);overflow:hidden;}
 .sn-vouches-head{max-width:1100px;margin:0 auto;padding:96px 24px 48px;text-align:center;}
 .sn-vc-mask{mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);padding-bottom:96px;}
 @keyframes sn-vc{from{transform:translateX(0);}to{transform:translateX(-33.333%);}}
@@ -281,7 +281,7 @@ export function SpanEnhance() {
         hiwEl.insertAdjacentElement('afterend', games)
       }
 
-      /* Vouches */
+      /* Vouches disabled — the site already has a reviews section.
       const gamesEl = document.getElementById('sn-games')
       if (gamesEl && !document.getElementById('sn-vouches')) {
         const card = (v: typeof VOUCHES[0], idx: number, hidden = false) => `
@@ -311,6 +311,7 @@ export function SpanEnhance() {
           <div class="sn-vc-mask"><div class="sn-vc-track">${allCards}</div></div>`
         gamesEl.insertAdjacentElement('afterend', vouches)
       }
+      */
 
       /* FAQ */
       const faqEl = document.querySelector<HTMLElement>('#general-content-faq')
