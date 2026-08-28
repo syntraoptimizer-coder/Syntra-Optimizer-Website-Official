@@ -30,7 +30,7 @@ const FEATURES: Feature[] = [
     description: 'Reduce latency with TCP/IP stack tuning, DNS prefetch, Nagle algorithm disable, and QoS prioritization. Cut your average ping by 15–30ms.',
   },
   {
-    icon: Trash2, number: '04', title: 'Deep Cleanup', tag: 'Cleaner Windows',
+    icon: Wifi, number: '04', title: 'Deep Cleanup', tag: 'Cleaner Windows',
     iconColor: '#34d399', iconBg: 'rgba(52,211,153,0.12)',
     description: 'Remove temp files, cache, and system clutter. Safely clear Windows Update cache, thumbnail databases, and prefetch files. Recover 8–15GB on average.',
   },
